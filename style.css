@@ -169,7 +169,7 @@ transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-8px);
+transform:translateY(0);
 }
 
 .card h4{
