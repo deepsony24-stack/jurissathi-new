@@ -684,3 +684,10 @@ html{
     font-weight:bold;
     margin-top:20px;
 }
+.founder-card{
+    max-width:500px;
+    margin:50px auto;
+    padding:25px;
+    position:relative;
+    z-index:1;
+}
