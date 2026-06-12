@@ -669,3 +669,8 @@ html{
 .hero-left h2{
    font-size: 56px;
 }
+.founder-card{
+    max-width: 500px;
+    margin: 30px auto;
+    text-align: center;
+}
