@@ -692,3 +692,9 @@ html{
     position:relative;
     z-index:1;
 }
+.service-title{
+    font-size:50px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:10px;
+}
