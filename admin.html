@@ -31,6 +31,7 @@ cursor:pointer;
 <h1>JurisSathi Admin Panel</h1>
 
 <h2>Consultation Leads</h2>
+  <h3 id="totalLeads">Total Leads: 0</h3>
 <div id="leads"></div>
 
 <script type="module">
@@ -57,7 +58,7 @@ const db = getFirestore(app);
 async function loadLeads(){
 
 const snapshot = await getDocs(collection(db,"consultations"));
-
+document.getElementById("totalLeads").innerText = "Total Leads: " + snapshot.size;
 let html = "";
 
 snapshot.forEach(doc=>{
