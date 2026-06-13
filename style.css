@@ -1106,3 +1106,8 @@ right:15px;
    color:white;
    text-decoration:none;
 }
+.nav{
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
