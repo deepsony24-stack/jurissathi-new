@@ -968,3 +968,23 @@ right:15px;
     display:flex !important;
   }
 }
+@media (max-width:768px){
+
+  #menu-toggle:checked ~ .menu{
+    display:flex !important;
+    position:absolute !important;
+    top:75px !important;
+    right:15px !important;
+    left:auto !important;
+    width:190px !important;
+    background:#050b18 !important;
+    border:1px solid #d4af37 !important;
+    border-radius:12px !important;
+    padding:15px !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:12px !important;
+    z-index:9999 !important;
+  }
+
+}
