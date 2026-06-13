@@ -753,3 +753,71 @@ html{
     text-align:center;
   }
 }
+@media (max-width: 768px){
+
+  .nav{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:14px 10px;
+    gap:10px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:10px;
+  }
+
+  .brand-icon{
+    font-size:30px;
+  }
+
+  .brand h1{
+    font-size:26px;
+  }
+
+  .brand p{
+    font-size:13px;
+  }
+
+  .menu{
+    display:flex !important;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+    width:100%;
+  }
+
+  .menu a{
+    font-size:13px;
+    display:inline-block !important;
+  }
+
+  .hero h1,
+  .service-title,
+  .about h2{
+    font-size:34px !important;
+  }
+
+  .grid{
+    grid-template-columns:1fr !important;
+    gap:18px;
+  }
+
+  .card{
+    padding:20px;
+  }
+
+  .card h2,
+  .card h3{
+    font-size:24px;
+  }
+
+  .card p{
+    font-size:16px;
+  }
+}
