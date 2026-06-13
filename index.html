@@ -258,10 +258,25 @@ Get Report
     Client reviews and feedback will be displayed here as they are received.
   </p>
 
-  <a href="https://wa.me/917354330031?text=I want to share my review"
-     class="btn gold">
-     Share Your Feedback
-  </a>
+ <button onclick="openReviewForm()" class="btn gold">
+  Share Your Feedback
+</button>
+
+<div id="reviewForm" style="display:none; margin-top:20px;">
+  <input type="text" id="reviewName" placeholder="Your Name"><br><br>
+
+  <select id="reviewRating">
+    <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
+    <option value="4">⭐⭐⭐⭐ 4 Star</option>
+    <option value="3">⭐⭐⭐ 3 Star</option>
+  </select><br><br>
+
+  <textarea id="reviewText" rows="4" placeholder="Write your feedback"></textarea><br><br>
+
+  <button onclick="submitReview()" class="btn gold">
+    Submit Review
+  </button>
+</div>
 </section>
   
   
@@ -372,6 +387,38 @@ Matter Details: ${details}`;
     console.error(error);
   }
 }
+    
+}
+
+window.openReviewForm = function () {
+  document.getElementById("reviewForm").style.display = "block";
+}
+
+window.submitReview = async function () {
+
+  let name = document.getElementById("reviewName").value;
+  let rating = document.getElementById("reviewRating").value;
+  let review = document.getElementById("reviewText").value;
+
+  if (!name || !review) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  await addDoc(collection(db, "reviews"), {
+    name: name,
+    rating: rating,
+    review: review,
+    status: "Pending",
+    createdAt: serverTimestamp()
+  });
+
+  alert("Review Submitted Successfully");
+
+  document.getElementById("reviewName").value = "";
+  document.getElementById("reviewText").value = "";
+}
+
 </script>
 </body>
 </html>
