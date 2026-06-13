@@ -917,3 +917,54 @@ html{
 }
 top:15px;
 right:15px;
+/* FINAL MOBILE HAMBURGER FIX */
+
+#menu-toggle{
+  display:none !important;
+}
+
+.hamburger{
+  display:none !important;
+}
+
+@media (max-width:768px){
+
+  .nav{
+    position:relative !important;
+  }
+
+  .hamburger{
+    display:block !important;
+    position:absolute !important;
+    top:18px !important;
+    right:18px !important;
+    font-size:32px !important;
+    color:#d4af37 !important;
+    z-index:9999 !important;
+  }
+
+  .menu{
+    display:none !important;
+    position:absolute !important;
+    top:80px !important;
+    right:15px !important;
+    background:#050b18 !important;
+    border:1px solid #d4af37 !important;
+    border-radius:12px !important;
+    padding:15px !important;
+    width:180px !important;
+    z-index:9998 !important;
+    flex-direction:column !important;
+    gap:12px !important;
+  }
+
+  .menu a{
+    display:block !important;
+    font-size:16px !important;
+    text-align:center !important;
+  }
+
+  #menu-toggle:checked ~ .menu{
+    display:flex !important;
+  }
+}
