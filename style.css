@@ -725,3 +725,31 @@ html{
   }
 
 }
+@media (max-width: 768px){
+
+  .nav{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    padding:15px 10px;
+  }
+
+  .menu{
+    display:flex !important;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+    width:100%;
+  }
+
+  .menu a{
+    display:inline-block !important;
+    font-size:14px;
+  }
+
+  .brand{
+    justify-content:center;
+    text-align:center;
+  }
+}
