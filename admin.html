@@ -39,6 +39,9 @@ if(password !== "Raj@1402"){
 
 <h2>Consultation Leads</h2>
   <h3 id="totalLeads">Total Leads: 0</h3>
+    <h3 id="newLeads">New Leads: 0</h3>
+<h3 id="contactedLeads">Contacted: 0</h3>
+<h3 id="closedLeads">Closed: 0</h3>
 <div id="leads"></div>
 
 <script type="module">
@@ -69,11 +72,16 @@ async function loadLeads(){
 const snapshot = await getDocs(collection(db,"consultations"));
 document.getElementById("totalLeads").innerText = "Total Leads: " + snapshot.size;
 let html = "";
-
+let newCount = 0;
+let contactedCount = 0;
+let closedCount = 0;
 snapshot.forEach(doc=>{
 
 const data = doc.data();
-let status = data.status || "New";
+let status = data.status || "New Lead";
+    if(status === "New Lead") newCount++;
+if(status === "Contacted") contactedCount++;
+if(status === "Closed") closedCount++;
 html += `
 <div class="card">
 <h3>${data.name}</h3>
@@ -97,7 +105,9 @@ Closed
 `;
 
 });
-
+document.getElementById("newLeads").innerText = "New Leads: " + newCount;
+document.getElementById("contactedLeads").innerText = "Contacted: " + contactedCount;
+document.getElementById("closedLeads").innerText = "Closed: " + closedCount;
 document.getElementById("leads").innerHTML = html;
 
 }
