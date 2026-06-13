@@ -1111,3 +1111,9 @@ right:15px;
     top: 0;
     z-index: 9999;
 }
+/* STICKY HEADER FINAL */
+header.nav{
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 99999 !important;
+}
