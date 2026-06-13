@@ -901,3 +901,17 @@ html{
     display:flex !important;
   }
 }
+@media (max-width:768px){
+
+  .nav{
+    position:relative;
+  }
+
+  .hamburger{
+    position:absolute;
+    top:20px;
+    right:20px;
+    margin:0;
+    font-size:32px;
+  }
+}
