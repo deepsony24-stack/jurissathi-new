@@ -327,7 +327,7 @@ Gwalior, Madhya Pradesh
 <a class="whatsapp" href="https://wa.me/917354330031?text=Namaskar%20Mujhe%20Legal%20Consultation%20chahiye">☎</a>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
@@ -341,7 +341,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-    import { getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    
 
 async function loadReviews() {
   const reviewsList = document.getElementById("reviewsList");
