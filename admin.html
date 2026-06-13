@@ -48,6 +48,8 @@ import {
 getFirestore,
 collection,
 getDocs
+    doc,
+updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -99,7 +101,14 @@ Closed
 document.getElementById("leads").innerHTML = html;
 
 }
+window.updateStatus = async function(id, status){
+  await updateDoc(doc(db, "consultations", id), {
+    status: status
+  });
 
+  alert("Status Updated to " + status);
+  location.reload();
+}
 loadLeads();
     window.updateStatus = async function(id, status){
 
