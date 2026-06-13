@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JurisSathi Admin Panel</title>
+<style>
+body{
+font-family:Arial;
+background:#111827;
+color:white;
+padding:20px;
+}
+.card{
+background:#1f2937;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+}
+button{
+background:#fbbf24;
+border:none;
+padding:8px 15px;
+border-radius:5px;
+cursor:pointer;
+}
+</style>
+</head>
 
+<body>
+
+<h1>JurisSathi Admin Panel</h1>
+
+<h2>Consultation Leads</h2>
+<div id="leads"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getFirestore,
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
+authDomain: "jurissathi.firebaseapp.com",
+projectId: "jurissathi",
+storageBucket: "jurissathi.firebasestorage.app",
+messagingSenderId: "529261201285",
+appId: "1:529261201285:web:529bd38c0ae95654d6e6ec"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadLeads(){
+
+const snapshot = await getDocs(collection(db,"consultations"));
+
+let html = "";
+
+snapshot.forEach(doc=>{
+
+const data = doc.data();
+
+html += `
+<div class="card">
+<h3>${data.name}</h3>
+<p>Mobile: ${data.phone}</p>
+<p>Case: ${data.caseType}</p>
+<p>Date: ${data.preferredDate}</p>
+<p>Details: ${data.details}</p>
+</div>
+`;
+
+});
+
+document.getElementById("leads").innerHTML = html;
+
+}
+
+loadLeads();
+
+</script>
+
+</body>
+</html>
