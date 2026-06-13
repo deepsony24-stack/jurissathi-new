@@ -1123,3 +1123,8 @@ header.nav{
    color:white !important;
    text-decoration:none !important;
 }
+@media (max-width:768px){
+    .about h1{
+        font-size: 32px;
+    }
+}
