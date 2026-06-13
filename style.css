@@ -1095,3 +1095,10 @@ right:15px;
    border-left:3px solid #d4af37;
    padding-left:10px;
 }
+.menu{
+   backdrop-filter: blur(10px);
+}
+
+.menu a:hover{
+   color:#d4af37;
+}
