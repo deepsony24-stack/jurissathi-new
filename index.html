@@ -310,18 +310,51 @@ Gwalior, Madhya Pradesh
 </footer>
 
 <a class="whatsapp" href="https://wa.me/917354330031?text=Namaskar%20Mujhe%20Legal%20Consultation%20chahiye">☎</a>
-<script>
-function sendBooking(){
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let type = document.getElementById("consultationType").value;
-let name = document.getElementById("clientName").value;
-let phone = document.getElementById("clientPhone").value;
-let caseType = document.getElementById("caseType").value;
-let date = document.getElementById("bookingDate").value;
-let time = document.getElementById("bookingTime").value;
-let details = document.getElementById("caseDetails").value;
+const firebaseConfig = {
+  apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
+  authDomain: "jurissathi.firebaseapp.com",
+  projectId: "jurissathi",
+  storageBucket: "jurissathi.firebasestorage.app",
+  messagingSenderId: "529261201285",
+  appId: "1:529261201285:web:529bd38c0ae95654d6e6ec",
+  measurementId: "G-8P8L4MBJRP"
+};
 
-let message = `New Consultation Booking
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.sendBooking = async function () {
+  let type = document.getElementById("consultationType").value;
+  let name = document.getElementById("clientName").value;
+  let phone = document.getElementById("clientPhone").value;
+  let caseType = document.getElementById("caseType").value;
+  let date = document.getElementById("bookingDate").value;
+  let time = document.getElementById("bookingTime").value;
+  let details = document.getElementById("caseDetails").value;
+
+  if (!name || !phone || !caseType || !details) {
+    alert("Please fill Name, Phone, Case Type and Details.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "consultations"), {
+      name: name,
+      phone: phone,
+      caseType: caseType,
+      consultationType: type,
+      preferredDate: date,
+      preferredTime: time,
+      details: details,
+      status: "New Lead",
+      createdAt: serverTimestamp()
+    });
+
+    let message = `New Consultation Booking
 
 Name: ${name}
 Mobile: ${phone}
@@ -331,11 +364,13 @@ Preferred Date: ${date}
 Preferred Time: ${time}
 Matter Details: ${details}`;
 
-let whatsappURL =
-"https://wa.me/917354330031?text=" +
-encodeURIComponent(message);
+    let whatsappURL = "https://wa.me/917354330031?text=" + encodeURIComponent(message);
+    window.open(whatsappURL, "_blank");
 
-window.open(whatsappURL, "_blank");
+  } catch (error) {
+    alert("Booking save nahi hui. Please try again.");
+    console.error(error);
+  }
 }
 </script>
 </body>
