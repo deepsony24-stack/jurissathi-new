@@ -1117,3 +1117,9 @@ header.nav{
     top: 0 !important;
     z-index: 99999 !important;
 }
+.contact-card a,
+.card a,
+.about a{
+   color:white !important;
+   text-decoration:none !important;
+}
