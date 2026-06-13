@@ -1102,3 +1102,7 @@ right:15px;
 .menu a:hover{
    color:#d4af37;
 }
+.contact-card a{
+   color:white;
+   text-decoration:none;
+}
