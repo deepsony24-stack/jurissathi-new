@@ -71,7 +71,7 @@ let html = "";
 snapshot.forEach(doc=>{
 
 const data = doc.data();
-
+let status = data.status || "New";
 html += `
 <div class="card">
 <h3>${data.name}</h3>
@@ -79,6 +79,15 @@ html += `
 <p>Case: ${data.caseType}</p>
 <p>Date: ${data.preferredDate}</p>
 <p>Details: ${data.details}</p>
+<p>Status: ${status}</p>
+
+<button onclick="updateStatus('${doc.id}','Contacted')">
+Contacted
+</button>
+
+<button onclick="updateStatus('${doc.id}','Closed')">
+Closed
+</button>
 <a href="https://wa.me/91${data.phone}?text=${encodeURIComponent('Namaskar, JurisSathi se aapki legal enquiry ke sambandh me sampark kar rahe hain.')}" target="_blank">
   <button>WhatsApp Client</button>
 </a>
@@ -92,6 +101,11 @@ document.getElementById("leads").innerHTML = html;
 }
 
 loadLeads();
+    window.updateStatus = async function(id, status){
+
+  alert("Status changed to: " + status);
+
+}
 
 </script>
 
