@@ -342,7 +342,26 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-    
+// Visitor Counter
+async function trackVisitor() {
+
+  const visitorRef = doc(db, "analytics", "visitors");
+
+  const visitorSnap = await getDoc(visitorRef);
+
+  if (visitorSnap.exists()) {
+    await updateDoc(visitorRef, {
+      totalVisitors: increment(1)
+    });
+  } else {
+    await setDoc(visitorRef, {
+      totalVisitors: 1
+    });
+  }
+
+}
+
+trackVisitor();    
 
 async function loadReviews() {
   const reviewsList = document.getElementById("reviewsList");
