@@ -630,7 +630,13 @@ html{
 /* Legal Team Section */
 
 #team .card{
-    border:1px solid rgba(212,160,23,0.5);
+    width:350px;
+    min-height:180px;
+    padding:25px;
+    border:2px solid #d4a017;
+    border-radius:20px;
+    background:rgba(255,255,255,0.05);
+    box-shadow:0 0 15px rgba(212,160,23,0.3);
     transition:all 0.3s ease;
 }
 
