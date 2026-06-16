@@ -39,6 +39,8 @@ if(password !== "Raj@1402"){
 <div style="background:#1a2238;padding:15px;border-radius:10px;margin-bottom:20px;">
     <h2>📊 Website Analytics</h2>
     <h3 id="visitorCount">Total Visitors: Loading...</h3>
+    <h3 id="todayVisitors">Today Visitors: Loading...</h3>
+<h3 id="monthVisitors">Monthly Visitors: Loading...</h3>
 </div>
 <h2>Consultation Leads</h2>
   <h3 id="totalLeads">Total Leads: 0</h3>
@@ -76,6 +78,11 @@ async function loadVisitors(){
 
   if(visitorSnap.exists()){
     const data = visitorSnap.data();
+      document.getElementById("todayVisitors").innerText =
+  "Today Visitors: " + (data.todayVisitors || 0);
+
+document.getElementById("monthVisitors").innerText =
+  "Monthly Visitors: " + (data.monthVisitors || 0);
     document.getElementById("visitorCount").innerText =
       "Total Visitors: " + data.totalVisitors;
   }
