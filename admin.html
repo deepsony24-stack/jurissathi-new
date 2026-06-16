@@ -36,7 +36,10 @@ if(password !== "Raj@1402"){
 }
 </script>
 <h1>JurisSathi Admin Panel</h1>
-
+<div style="background:#1a2238;padding:15px;border-radius:10px;margin-bottom:20px;">
+    <h2>📊 Website Analytics</h2>
+    <h3 id="visitorCount">Total Visitors: Loading...</h3>
+</div>
 <h2>Consultation Leads</h2>
   <h3 id="totalLeads">Total Leads: 0</h3>
     <h3 id="newLeads">New Leads: 0</h3>
@@ -52,6 +55,7 @@ import {
   collection,
   getDocs,
   doc,
+  getDoc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -66,7 +70,18 @@ appId: "1:529261201285:web:529bd38c0ae95654d6e6ec"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+async function loadVisitors(){
+  const visitorRef = doc(db, "analytics", "visitors");
+  const visitorSnap = await getDoc(visitorRef);
 
+  if(visitorSnap.exists()){
+    const data = visitorSnap.data();
+    document.getElementById("visitorCount").innerText =
+      "Total Visitors: " + data.totalVisitors;
+  }
+}
+
+loadVisitors();
 async function loadLeads(){
 
 const snapshot = await getDocs(collection(db,"consultations"));
