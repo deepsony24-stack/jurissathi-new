@@ -344,24 +344,32 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // Visitor Counter
 async function trackVisitor() {
+  const today = new Date().toISOString().slice(0, 10);
+  const month = new Date().toISOString().slice(0, 7);
 
   const visitorRef = doc(db, "analytics", "visitors");
-
   const visitorSnap = await getDoc(visitorRef);
 
   if (visitorSnap.exists()) {
     await updateDoc(visitorRef, {
-      totalVisitors: increment(1)
+      totalVisitors: increment(1),
+      todayDate: today,
+      monthDate: month,
+      todayVisitors: increment(1),
+      monthVisitors: increment(1)
     });
   } else {
     await setDoc(visitorRef, {
-      totalVisitors: 1
+      totalVisitors: 1,
+      todayDate: today,
+      monthDate: month,
+      todayVisitors: 1,
+      monthVisitors: 1
     });
   }
-
 }
 
-trackVisitor();    
+trackVisitor();
 
 async function loadReviews() {
   const reviewsList = document.getElementById("reviewsList");
