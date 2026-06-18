@@ -41,7 +41,19 @@ button{
 <body>
 
 <h1>Money Recovery Notice Generator</h1>
+<h3>Advocate Details</h3>
 
+<input id="advName" placeholder="Advocate Name">
+
+<input id="enrollmentNo" placeholder="Enrollment Number (Optional)">
+
+<input id="advCourt" placeholder="Court Details">
+
+<input id="advMobile" placeholder="Mobile Number">
+
+<input id="advEmail" placeholder="Email Address">
+
+<input id="advAddress" placeholder="Office Address">
 <label>Output Language</label>
 <select id="language">
 <option value="hindi">Generate in Hindi</option>
@@ -49,10 +61,12 @@ button{
 </select>
 <label>Notice Date</label>
 <input type="date" id="noticeDate">
+    <h3>Client Details</h3>
    <input id="clientName" placeholder="Client Name">
    <input id="fatherName" placeholder="Father/Husband Name">
 <input id="clientAddress" placeholder="Client Address">
    <input id="mobile" placeholder="Mobile Number">
+    <h3>Case Details</h3>
    <input id="opponentName" placeholder="Opposite Party Name">
    <input id="opponentFather" placeholder="Opposite Party Father/Husband Name">
    <input id="opponentMobile" placeholder="Opposite Party Mobile Number">
@@ -80,6 +94,12 @@ function generateNotice(){
   let language = document.getElementById("language").value;
   let noticeDate = document.getElementById("noticeDate").value;
 let noticeDateFormatted = new Date(noticeDate).toLocaleDateString('en-GB');
+   let advName = document.getElementById("advName").value;
+let enrollmentNo = document.getElementById("enrollmentNo").value;
+let advCourt = document.getElementById("advCourt").value;
+let advMobile = document.getElementById("advMobile").value;
+let advEmail = document.getElementById("advEmail").value;
+let advAddress = document.getElementById("advAddress").value; 
   let client = document.getElementById("clientName").value;
   let father = document.getElementById("fatherName").value;
   let address = document.getElementById("clientAddress").value;
@@ -120,17 +140,18 @@ if(diffDays >= 30){
   if(language === "hindi"){
   notice = `
 
-                               विधिक नोटिस
+                                      विधिक नोटिस
 
-                                                     दिनांक: ..../..../.......
+                                                         दिनांक: ..../..../.......
 
-प्रेषक:
+प्प्रेषक:
 
-अधिवक्ता ब्रजेश राजोरिया
-जिला न्यायालय, ग्वालियर (म.प्र.)
-मोबाइल: 7566098001
-ईमेल: Brajeshrajoriya9@gmail.com
-पता: B-17, गौतम नगर, मुरार, ग्वालियर (म.प्र.)
+${advName}
+Enrollment No.: ${enrollmentNo}
+${advCourt}
+मोबाइल: ${advMobile}
+ईमेल: ${advEmail}
+पता: ${advAddress}
 
 मेरे मुवक्किल श्री ${client},पुत्र/पति श्री ${father},निवासी ${address},
 मोबाइल नं. ${mobile}की ओर से।
@@ -177,8 +198,10 @@ if(diffDays >= 30){
 कृपया इस नोटिस को अंतिम अवसर मानते हुए निर्धारित अवधि में भुगतान सुनिश्चित करें।
 
 भवदीय,
-Adv. Brajesh Rajoriya
-JurisSathi`;
+
+(${advName})
+अधिवक्ता
+Enrollment No.: ${enrollmentNo}`;
   } else {
     notice = `LEGAL NOTICE
 
