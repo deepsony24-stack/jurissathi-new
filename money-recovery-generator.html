@@ -4,71 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Money Recovery Notice Generator</title>
-
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#0b1220;
-color:white;
-padding:20px;
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
-border:none;
-}
-
-button{
-background:#ff9800;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:8px;
-cursor:pointer;
-margin-top:10px;
-}
-
-#output{
-background:#1a2238;
-padding:20px;
-margin-top:20px;
-border-radius:10px;
-white-space:pre-wrap;
-}
+body{font-family:Arial,sans-serif;background:#0b1220;color:white;padding:20px}
+input,textarea,select{width:100%;padding:12px;margin:8px 0;border-radius:6px;border:none}
+button{background:#ff9800;color:white;border:none;padding:12px 20px;border-radius:8px;margin-top:10px}
+#output{display:none;background:white;color:black;padding:20px;margin-top:20px;border-radius:10px;white-space:pre-wrap}
 </style>
 </head>
-
 <body>
 
 <h1>Money Recovery Notice Generator</h1>
-  <label>Output Language</label>
 
-<select id="language" style="width:100%;padding:10px;margin:10px 0;border-radius:6px;">
-    <option value="hindi">Generate in Hindi</option>
-    <option value="english">Generate in English</option>
+<label>Output Language</label>
+<select id="language">
+<option value="hindi">Generate in Hindi</option>
+<option value="english">Generate in English</option>
 </select>
 
-<input id="clientName" placeholder="मुवक्किल का नाम">
-
-<input id="fatherName" placeholder="पिता/पति का नाम">
-
-<input id="clientAddress" placeholder="मुवक्किल का पता">
-
-<input id="mobile" placeholder="मोबाइल नंबर">
-
-<input id="opponentName" placeholder="विपक्षी का नाम">
-
-<input id="opponentAddress" placeholder="विपक्षी का पता">
-
-<input id="amount" placeholder="राशि">
-
-<input id="loanDate" placeholder="राशि देने की तारीख">
-
-<input id="returnDate" placeholder="वापस करने की तारीख">
-
+<input id="clientName" placeholder="Client Name / मुवक्किल का नाम">
+<input id="fatherName" placeholder="Father/Husband Name">
+<input id="clientAddress" placeholder="Client Address">
+<input id="mobile" placeholder="Mobile Number">
+<input id="opponentName" placeholder="Opposite Party Name">
+<input id="opponentAddress" placeholder="Opposite Party Address">
+<input id="amount" placeholder="Amount">
+<input id="loanDate" placeholder="Loan Date">
+<input id="returnDate" placeholder="Return Date">
 <textarea id="facts" rows="5" placeholder="Facts / Details"></textarea>
 
 <button onclick="generateNotice()">Generate Notice</button>
@@ -77,70 +38,81 @@ white-space:pre-wrap;
 
 <script>
 function generateNotice(){
-let language = document.getElementById("language").value;
-let client=document.getElementById("clientName").value;
-let father=document.getElementById("fatherName").value;
-let address=document.getElementById("clientAddress").value;
-let mobile=document.getElementById("mobile").value;
-let opponent=document.getElementById("opponentName").value;
-let opponentAddress=document.getElementById("opponentAddress").value;
-let amount=document.getElementById("amount").value;
-let loanDate=document.getElementById("loanDate").value;
-let returnDate=document.getElementById("returnDate").value;
-let facts=document.getElementById("facts").value;
+  let language = document.getElementById("language").value;
+  let client = document.getElementById("clientName").value;
+  let father = document.getElementById("fatherName").value;
+  let address = document.getElementById("clientAddress").value;
+  let mobile = document.getElementById("mobile").value;
+  let opponent = document.getElementById("opponentName").value;
+  let opponentAddress = document.getElementById("opponentAddress").value;
+  let amount = document.getElementById("amount").value;
+  let loanDate = document.getElementById("loanDate").value;
+  let returnDate = document.getElementById("returnDate").value;
+  let facts = document.getElementById("facts").value;
 
-if(language === "hindi"){
+  let notice = "";
 
-document.getElementById("output").innerText = `
-विधिक नोटिस
+  if(language === "hindi"){
+    notice = `विधिक नोटिस
 
-मेरे मुवक्किल ${client}
-पिता/पति ${father}
-निवासी ${address}
+मेरे मुवक्किल ${client},
+पिता/पति ${father},
+निवासी ${address},
 मोबाइल ${mobile}
 
 प्रति,
 ${opponent}
 ${opponentAddress}
 
-राशि: ₹${amount}
+विषय: धनराशि वसूली हेतु विधिक नोटिस।
+
+महोदय,
+
+मेरे मुवक्किल ने दिनांक ${loanDate} को आपको ₹${amount} प्रदान किए थे।
+
+आपने उक्त राशि ${returnDate} तक वापस करने का आश्वासन दिया था।
 
 तथ्य:
 ${facts}
 
+अतः आपको निर्देशित किया जाता है कि उक्त राशि का भुगतान तत्काल करें, अन्यथा विधिक कार्यवाही की जाएगी।
+
 भवदीय,
-
 Adv. Brajesh Rajoriya
-`;
+JurisSathi`;
+  } else {
+    notice = `LEGAL NOTICE
 
-}else{
-
-document.getElementById("output").innerText = `
-LEGAL NOTICE
-
-My Client: ${client}
-Father/Husband: ${father}
-Address: ${address}
+Under instructions from my client ${client},
+Father/Husband Name: ${father},
+Resident of: ${address},
 Mobile: ${mobile}
 
 To,
 ${opponent}
 ${opponentAddress}
 
-Amount: ₹${amount}
+Subject: Legal Notice for Recovery of Money.
+
+Sir/Madam,
+
+My client advanced an amount of ₹${amount} to you on ${loanDate}.
+
+You assured repayment on or before ${returnDate}.
 
 Facts:
 ${facts}
 
+You are hereby called upon to repay the aforesaid amount immediately, failing which appropriate legal action shall be initiated.
+
 Yours Faithfully,
-
 Adv. Brajesh Rajoriya
-`;
+JurisSathi`;
+  }
 
+  document.getElementById("output").innerText = notice;
+  document.getElementById("output").style.display = "block";
 }
-
-document.getElementById("output").style.display = "block";
-  
 </script>
 
 </body>
