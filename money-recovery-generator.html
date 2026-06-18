@@ -173,9 +173,13 @@ if(diffDays >= 30){
   if(language === "hindi"){
   notice = `
 
-                                        विधिक नोटिस
+  <div style="text-align:center;font-size:24px;font-weight:bold;">
+विधिक नोटिस
+</div>
 
-                                                            दिनांक: ..../..../.......
+   <div style="text-align:right;">
+दिनांक: ${noticeDateFormatted}
+</div>
 
 प्रेषक:
 
@@ -221,7 +225,7 @@ ${advCourt}
                                                             
                                                             (${advName})
                                                             अधिवक्ता
-                                                            Enrollment No.: ${enrollmentNo}
+                                                      नामांकन क्रमांक: ${enrollmentNo}   
 
 नोटः इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख एवं भविष्य में आवश्यक वैधानिक/न्यायालयीन कार्यवाही हेतु सुरक्षित रखी गई है।`;  
 
