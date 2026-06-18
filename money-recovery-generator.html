@@ -230,32 +230,62 @@ ${advName}
       
   } else {
     notice = `LEGAL NOTICE
+LEGAL NOTICE
 
-Under instructions from my client ${client},
-Father/Husband Name: ${father},
-Resident of: ${address},
-Mobile: ${mobile}
+Date: ${noticeDateFormatted}
 
-To,
-${opponent}
-${opponentAddress}
+FROM:
 
-Subject: Legal Notice for Recovery of Money.
+Adv. ${advName}
+${advCourt}
+
+Mobile: ${advMobile}
+Email: ${advEmail}
+Address: ${advAddress}
+
+Under instructions from and on behalf of my client Mr./Mrs. ${client},
+S/o, D/o, W/o ${father},
+Resident of ${address},
+Mobile No. ${mobile},
+
+TO,
+
+Mr./Mrs. ${opponent}
+S/o, D/o, W/o ${opponentFather},
+Resident of ${opponentAddress},
+Mobile No. ${opponentMobile}
+
+SUBJECT: Legal Notice for Recovery of Outstanding Amount of ₹${amount}/- along with Interest.
 
 Sir/Madam,
 
-My client advanced an amount of ₹${amount} to you on ${loanDateFormatted}.
+Under the instructions and on behalf of my above-named client, I hereby serve upon you the following Legal Notice:
 
-You assured repayment on or before ${returnDateFormatted}.
+1. That you and my client are known to each other and shared cordial relations based on mutual trust, confidence and goodwill.
+2. That due to your urgent financial requirement, particularly for ${purpose}, you approached my client and requested financial assistance.
+3. That relying upon your assurances and representations, my client advanced a total sum of ₹${amount}/-, out of which ₹${cashAmount}/- was paid in cash and ₹${onlineAmount}/- was transferred through Banking/UPI channels.
+4. That at the time of receiving the aforesaid amount, you expressly assured my client that the entire amount would be repaid within the agreed period.
+5. That despite the expiry of the agreed period, the outstanding amount has not been repaid by you and remains due and payable.
+6. That my client repeatedly contacted you through personal meetings, telephone calls, messages and other means requesting repayment of the outstanding amount, but no actual payment has been made.
+7. That despite repeated demands and reminders, you have avoided payment on one pretext or another and have failed to honour your commitment.
+8. That your conduct amounts to breach of trust and has caused financial loss, inconvenience and mental harassment to my client.
+9. That my client is legally entitled to recover the principal amount of ₹${amount}/- along with interest at the rate of ${interestRate}% per annum from the date of advancement of the loan until actual realization.
+10. That due to your default, my client has been compelled to incur unnecessary expenses and suffer financial hardship, for which you shall also be liable.
+11. That if the aforesaid amount is not paid within the stipulated period, my client shall be constrained to initiate appropriate legal proceedings before the competent court for recovery of the principal amount, interest, litigation expenses, advocate's fees and all other consequential reliefs, entirely at your risk, cost and consequences.
 
-Facts:
-${facts}
+Therefore, through this Legal Notice, you are hereby called upon to pay the entire outstanding amount along with applicable interest within 15 (Fifteen) days from the date of receipt of this notice.
+Failing compliance, my client shall initiate appropriate legal proceedings, including a Money Recovery Suit, before the competent court without any further reference to you.
 
-You are hereby called upon to repay the aforesaid amount immediately, failing which appropriate legal action shall be initiated.
+Kindly treat this notice as a final opportunity and ensure payment within the stipulated period.
 
 Yours Faithfully,
-Adv. Brajesh Rajoriya
-JurisSathi`;
+
+(${advName})
+Advocate
+
+Enrollment No.: ${enrollmentNo}
+
+Note: A copy of this Legal Notice has been retained in office records for future legal proceedings and reference.`;
   }
 
   document.getElementById("output").innerText = notice;
