@@ -44,6 +44,12 @@ white-space:pre-wrap;
 <body>
 
 <h1>Money Recovery Notice Generator</h1>
+  <label>Output Language</label>
+
+<select id="language" style="width:100%;padding:10px;margin:10px 0;border-radius:6px;">
+    <option value="hindi">Generate in Hindi</option>
+    <option value="english">Generate in English</option>
+</select>
 
 <input id="clientName" placeholder="मुवक्किल का नाम">
 
@@ -71,7 +77,7 @@ white-space:pre-wrap;
 
 <script>
 function generateNotice(){
-
+let language = document.getElementById("language").value;
 let client=document.getElementById("clientName").value;
 let father=document.getElementById("fatherName").value;
 let address=document.getElementById("clientAddress").value;
@@ -83,34 +89,41 @@ let loanDate=document.getElementById("loanDate").value;
 let returnDate=document.getElementById("returnDate").value;
 let facts=document.getElementById("facts").value;
 
-document.getElementById("output").innerText=
-`विधिक नोटिस
+if(language === "hindi"){
 
-मेरे मुवक्किल ${client},
-पिता/पति ${father},
-निवासी ${address},
-मोबाइल ${mobile}
+document.getElementById("output").innerText = `
 
-प्रति,
-${opponent}
-${opponentAddress}
+विधिक नोटिस
 
-विषय: धनराशि वसूली हेतु विधिक नोटिस।
+मेरे मुवक्किल ${client}
+पिता/पति ${father}
 
-महोदय,
-
-मेरे मुवक्किल ने दिनांक ${loanDate} को आपको ₹${amount} प्रदान किए थे।
-
-आपने उक्त राशि ${returnDate} तक वापस करने का आश्वासन दिया था।
+राशि ₹${amount}
 
 तथ्य:
 ${facts}
 
-अतः आपको निर्देशित किया जाता है कि उक्त राशि का भुगतान तत्काल करें, अन्यथा मेरे मुवक्किल आपके विरुद्ध उचित विधिक कार्यवाही करने के लिए स्वतंत्र होंगे।
-
 भवदीय,
 Adv. Brajesh Rajoriya
-JurisSathi`;
+`;
+
+}else{
+
+document.getElementById("output").innerText = `
+LEGAL NOTICE
+
+Under instructions from my client ${client}
+
+Amount: ₹${amount}
+
+Facts:
+${facts}
+
+Yours Faithfully,
+
+Adv. Brajesh Rajoriya
+`;
+document.getElementById("output").style.display = "block";
 }
 </script>
 
