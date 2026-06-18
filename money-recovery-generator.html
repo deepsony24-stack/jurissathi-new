@@ -1,1 +1,118 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money Recovery Notice Generator</title>
 
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#0b1220;
+color:white;
+padding:20px;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+border:none;
+}
+
+button{
+background:#ff9800;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+}
+
+#output{
+background:#1a2238;
+padding:20px;
+margin-top:20px;
+border-radius:10px;
+white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Money Recovery Notice Generator</h1>
+
+<input id="clientName" placeholder="मुवक्किल का नाम">
+
+<input id="fatherName" placeholder="पिता/पति का नाम">
+
+<input id="clientAddress" placeholder="मुवक्किल का पता">
+
+<input id="mobile" placeholder="मोबाइल नंबर">
+
+<input id="opponentName" placeholder="विपक्षी का नाम">
+
+<input id="opponentAddress" placeholder="विपक्षी का पता">
+
+<input id="amount" placeholder="राशि">
+
+<input id="loanDate" placeholder="राशि देने की तारीख">
+
+<input id="returnDate" placeholder="वापस करने की तारीख">
+
+<textarea id="facts" rows="5" placeholder="Facts / Details"></textarea>
+
+<button onclick="generateNotice()">Generate Notice</button>
+
+<div id="output"></div>
+
+<script>
+function generateNotice(){
+
+let client=document.getElementById("clientName").value;
+let father=document.getElementById("fatherName").value;
+let address=document.getElementById("clientAddress").value;
+let mobile=document.getElementById("mobile").value;
+let opponent=document.getElementById("opponentName").value;
+let opponentAddress=document.getElementById("opponentAddress").value;
+let amount=document.getElementById("amount").value;
+let loanDate=document.getElementById("loanDate").value;
+let returnDate=document.getElementById("returnDate").value;
+let facts=document.getElementById("facts").value;
+
+document.getElementById("output").innerText=
+`विधिक नोटिस
+
+मेरे मुवक्किल ${client},
+पिता/पति ${father},
+निवासी ${address},
+मोबाइल ${mobile}
+
+प्रति,
+${opponent}
+${opponentAddress}
+
+विषय: धनराशि वसूली हेतु विधिक नोटिस।
+
+महोदय,
+
+मेरे मुवक्किल ने दिनांक ${loanDate} को आपको ₹${amount} प्रदान किए थे।
+
+आपने उक्त राशि ${returnDate} तक वापस करने का आश्वासन दिया था।
+
+तथ्य:
+${facts}
+
+अतः आपको निर्देशित किया जाता है कि उक्त राशि का भुगतान तत्काल करें, अन्यथा मेरे मुवक्किल आपके विरुद्ध उचित विधिक कार्यवाही करने के लिए स्वतंत्र होंगे।
+
+भवदीय,
+Adv. Brajesh Rajoriya
+JurisSathi`;
+}
+</script>
+
+</body>
+</html>
