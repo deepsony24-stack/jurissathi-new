@@ -39,9 +39,11 @@ button{background:#ff9800;color:white;border:none;padding:12px 20px;border-radiu
 
 <label>Return Date</label>
 <input type="date" id="returnDate">
-<textarea id="facts" rows="5" placeholder="Facts / Details"></textarea>
 
 <button onclick="generateNotice()">Generate Notice</button>
+  <button onclick="downloadWord()">Download Word</button>
+
+<button onclick="window.print()">Download PDF</button>
 
 <div id="output"></div>
 
@@ -82,7 +84,6 @@ if(diffDays >= 30){
 }else{
     returnPeriod = diffDays + " दिन";
 }
-  let facts = document.getElementById("facts").value;
 
   let notice = "";
 
@@ -168,6 +169,23 @@ JurisSathi`;
 
   document.getElementById("output").innerText = notice;
   document.getElementById("output").style.display = "block";
+}
+  function downloadWord() {
+
+let content = document.getElementById("output").innerText;
+
+let blob = new Blob([content], {
+type: "application/msword"
+});
+
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download = "Money_Recovery_Notice.doc";
+
+link.click();
+
 }
 </script>
 
