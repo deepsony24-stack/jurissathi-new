@@ -26,6 +26,12 @@ button{background:#ff9800;color:white;border:none;padding:12px 20px;border-radiu
 <input id="clientAddress" placeholder="Client Address">
 <input id="mobile" placeholder="Mobile Number">
 <input id="opponentName" placeholder="Opposite Party Name">
+  <input id="opponentFather" placeholder="Opposite Party Father/Husband Name">
+  <input id="opponentMobile" placeholder="Opposite Party Mobile Number">
+  <input id="cashAmount" placeholder="Cash Amount">
+<input id="onlineAmount" placeholder="Online / UPI Amount">
+<input id="purpose" placeholder="Purpose e.g. Medical Emergency">
+<input id="interestRate" placeholder="Interest Rate e.g. 12">
 <input id="opponentAddress" placeholder="Opposite Party Address">
 <input id="amount" placeholder="Amount">
 <label>Loan Date</label>
@@ -49,6 +55,17 @@ function generateNotice(){
   let opponent = document.getElementById("opponentName").value;
   let opponentAddress = document.getElementById("opponentAddress").value;
   let amount = document.getElementById("amount").value;
+  let opponentFather = document.getElementById("opponentFather").value;
+
+let opponentMobile = document.getElementById("opponentMobile").value;
+
+let cashAmount = document.getElementById("cashAmount").value;
+
+let onlineAmount = document.getElementById("onlineAmount").value;
+
+let purpose = document.getElementById("purpose").value;
+
+let interestRate = document.getElementById("interestRate").value;
   let loanDate = document.getElementById("loanDate").value;
   let returnDate = document.getElementById("returnDate").value;
   let loanDateFormatted = new Date(loanDate).toLocaleDateString('en-GB');
@@ -90,9 +107,31 @@ ${opponentAddress}
 आपने उक्त राशि ${returnDateFormatted} तक वापस करने का आश्वासन दिया था।
 
 तथ्य:
-${facts}
+तथ्य:
 
-अतः आपको निर्देशित किया जाता है कि उक्त राशि का भुगतान तत्काल करें, अन्यथा विधिक कार्यवाही की जाएगी।
+1. कि मेरे मुवक्किल एवं आप परस्पर परिचित हैं।
+
+2. कि आपने ${purpose} के लिए मेरे मुवक्किल से आर्थिक सहायता मांगी थी।
+
+3. कि आपके अनुरोध पर मेरे मुवक्किल ने कुल ₹${amount} की राशि प्रदान की।
+
+4. कि उक्त राशि में ₹${cashAmount} नकद एवं ₹${onlineAmount} ऑनलाइन/UPI माध्यम से दिए गए।
+
+5. कि उक्त राशि दिनांक ${loanDateFormatted} को प्रदान की गई।
+
+6. कि आपने उक्त राशि ${returnPeriod} की अवधि में वापस करने का आश्वासन दिया था।
+
+7. कि आपने राशि दिनांक ${returnDateFormatted} तक लौटाने का वचन दिया था।
+
+8. कि निर्धारित समय बीत जाने के बाद भी आपने राशि वापस नहीं की।
+
+9. कि मेरे मुवक्किल द्वारा कई बार मौखिक रूप से मांग करने पर भी आपने भुगतान नहीं किया।
+
+10. कि आपका यह आचरण विश्वासघात एवं अनुचित लाभ प्राप्त करने की मंशा को दर्शाता है।
+
+11. कि आप पर ₹${amount} मूलधन देय है तथा ${interestRate}% वार्षिक ब्याज सहित भुगतान अपेक्षित है।
+
+अतः आपको इस विधिक नोटिस की प्राप्ति से 15 दिवस के भीतर ₹${amount} तथा देय ब्याज का भुगतान करने हेतु निर्देशित किया जाता है, अन्यथा मेरे मुवक्किल आपके विरुद्ध सक्षम न्यायालय में धनवसूली, ब्याज, व्यय एवं अन्य विधिक कार्यवाही करने के लिए स्वतंत्र होंगे, जिसकी समस्त जिम्मेदारी आपकी होगी।
 
 भवदीय,
 Adv. Brajesh Rajoriya
