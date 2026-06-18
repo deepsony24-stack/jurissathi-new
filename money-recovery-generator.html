@@ -185,7 +185,7 @@ link.href = URL.createObjectURL(blob);
 link.download = "Money_Recovery_Notice.doc";
 
 link.click();
-
+URL.revokeObjectURL(link.href);
 }
 </script>
 
