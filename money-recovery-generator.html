@@ -36,6 +36,21 @@ button{
 .row input{
     flex:1;
 }
+    .row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+
+@media(max-width:768px){
+    .row{
+        flex-direction:column;
+    }
+}
 </style>
 </head>
 <body>
@@ -43,15 +58,17 @@ button{
 <h1>Money Recovery Notice Generator</h1>
 <h3>Advocate Details</h3>
 
-<input id="advName" placeholder="Advocate Name">
+<div class="row">
+    <input id="advName" placeholder="Advocate Name">
+    <input id="enrollmentNo" placeholder="Enrollment Number">
+</div>
 
-<input id="enrollmentNo" placeholder="Enrollment Number (Optional)">
+<div class="row">
+    <input id="advMobile" placeholder="Mobile Number">
+    <input id="advEmail" placeholder="Email Address">
+</div>
 
 <input id="advCourt" placeholder="Court Details">
-
-<input id="advMobile" placeholder="Mobile Number">
-
-<input id="advEmail" placeholder="Email Address">
 
 <input id="advAddress" placeholder="Office Address">
 <label>Output Language</label>
@@ -62,25 +79,41 @@ button{
 <label>Notice Date</label>
 <input type="date" id="noticeDate">
     <h3>Client Details</h3>
-   <input id="clientName" placeholder="Client Name">
-   <input id="fatherName" placeholder="Father/Husband Name">
-<input id="clientAddress" placeholder="Client Address">
-   <input id="mobile" placeholder="Mobile Number">
-    <h3>Case Details</h3>
-   <input id="opponentName" placeholder="Opposite Party Name">
-   <input id="opponentFather" placeholder="Opposite Party Father/Husband Name">
-   <input id="opponentMobile" placeholder="Opposite Party Mobile Number">
-   <input id="cashAmount" placeholder="Cash Amount">
-<input id="onlineAmount" placeholder="Online / UPI Amount">
-<input id="purpose" placeholder="Purpose e.g. Medical Emergency">
-<input id="interestRate" placeholder="Interest Rate e.g. 12">
-<input id="opponentAddress" placeholder="Opposite Party Address">
-<input id="amount" placeholder="Amount">
-<label>Loan Date</label>
-<input type="date" id="loanDate">
+   <div class="row">
+    <input id="clientName" placeholder="Client Name">
+    <input id="fatherName" placeholder="Father/Husband Name">
+</div>
 
-<label>Return Date</label>
-<input type="date" id="returnDate">
+<div class="row">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="clientAddress" placeholder="Client Address">
+</div>
+    <h3>Case Details</h3>
+   <div class="row">
+    <input id="opponentName" placeholder="Opposite Party Name">
+    <input id="opponentFather" placeholder="Opposite Party Father/Husband Name">
+</div>
+
+<div class="row">
+    <input id="opponentMobile" placeholder="Opposite Party Mobile Number">
+    <input id="amount" placeholder="Amount">
+</div>
+
+<div class="row">
+    <input id="cashAmount" placeholder="Cash Amount">
+    <input id="onlineAmount" placeholder="Online / UPI Amount">
+</div>
+
+<div class="row">
+    <input id="purpose" placeholder="Purpose e.g. Medical Emergency">
+    <input id="interestRate" placeholder="Interest Rate e.g. 12">
+</div>
+
+<input id="opponentAddress" placeholder="Opposite Party Address">
+<div class="row">
+    <input type="date" id="loanDate">
+    <input type="date" id="returnDate">
+</div>
 
 <button onclick="generateNotice()">Generate Notice</button>
   <button onclick="downloadWord()">Download Word</button>
