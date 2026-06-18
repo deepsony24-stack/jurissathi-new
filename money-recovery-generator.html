@@ -92,18 +92,24 @@ let facts=document.getElementById("facts").value;
 if(language === "hindi"){
 
 document.getElementById("output").innerText = `
-
 विधिक नोटिस
 
 मेरे मुवक्किल ${client}
 पिता/पति ${father}
+निवासी ${address}
+मोबाइल ${mobile}
 
-राशि ₹${amount}
+प्रति,
+${opponent}
+${opponentAddress}
+
+राशि: ₹${amount}
 
 तथ्य:
 ${facts}
 
 भवदीय,
+
 Adv. Brajesh Rajoriya
 `;
 
@@ -112,7 +118,14 @@ Adv. Brajesh Rajoriya
 document.getElementById("output").innerText = `
 LEGAL NOTICE
 
-Under instructions from my client ${client}
+My Client: ${client}
+Father/Husband: ${father}
+Address: ${address}
+Mobile: ${mobile}
+
+To,
+${opponent}
+${opponentAddress}
 
 Amount: ₹${amount}
 
@@ -123,8 +136,10 @@ Yours Faithfully,
 
 Adv. Brajesh Rajoriya
 `;
-document.getElementById("output").style.display = "block";
+
 }
+
+document.getElementById("output").style.display = "block";
   
 </script>
 
