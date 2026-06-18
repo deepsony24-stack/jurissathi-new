@@ -358,13 +358,16 @@ async function trackVisitor() {
   const visitorSnap = await getDoc(visitorRef);
 
   if (visitorSnap.exists()) {
-    await updateDoc(visitorRef, {
-      totalVisitors: increment(1),
-      todayDate: today,
-      monthDate: month,
-      todayVisitors: increment(1),
-      monthVisitors: increment(1)
-    });
+const data = visitorSnap.data();
+   await updateDoc(visitorRef, {
+  totalVisitors: increment(1),
+
+  todayDate: today,
+  todayVisitors: data.todayDate === today ? increment(1) : 1,
+
+  monthDate: month,
+  monthVisitors: data.monthDate === month ? increment(1) : 1
+});
   } else {
     await setDoc(visitorRef, {
       totalVisitors: 1,
