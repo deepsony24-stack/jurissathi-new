@@ -53,6 +53,18 @@ function generateNotice(){
   let returnDate = document.getElementById("returnDate").value;
   let loanDateFormatted = new Date(loanDate).toLocaleDateString('en-GB');
 let returnDateFormatted = new Date(returnDate).toLocaleDateString('en-GB');
+  let loan = new Date(loanDate);
+let ret = new Date(returnDate);
+
+let diffDays = Math.floor((ret - loan) / (1000 * 60 * 60 * 24));
+
+let returnPeriod = "";
+
+if(diffDays >= 30){
+    returnPeriod = Math.floor(diffDays / 30) + " माह";
+}else{
+    returnPeriod = diffDays + " दिन";
+}
   let facts = document.getElementById("facts").value;
 
   let notice = "";
@@ -74,7 +86,7 @@ ${opponentAddress}
 महोदय,
 
 मेरे मुवक्किल ने दिनांक ${loanDateFormatted} को आपको ₹${amount} प्रदान किए थे।
-
+आपने उक्त धनराशि ${returnPeriod} की अवधि हेतु उधार ली थी।
 आपने उक्त राशि ${returnDateFormatted} तक वापस करने का आश्वासन दिया था।
 
 तथ्य:
