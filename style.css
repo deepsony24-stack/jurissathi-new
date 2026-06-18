@@ -1134,12 +1134,3 @@ header.nav{
         font-size: 32px;
     }
 }
-.row{
-    display:flex;
-    gap:10px;
-    margin-bottom:10px;
-}
-
-.row input{
-    flex:1;
-}
