@@ -20,7 +20,8 @@ button{background:#ff9800;color:white;border:none;padding:12px 20px;border-radiu
 <option value="hindi">Generate in Hindi</option>
 <option value="english">Generate in English</option>
 </select>
-
+<label>Notice Date</label>
+<input type="date" id="noticeDate">
 <input id="clientName" placeholder="Client Name / मुवक्किल का नाम">
 <input id="fatherName" placeholder="Father/Husband Name">
 <input id="clientAddress" placeholder="Client Address">
@@ -50,6 +51,8 @@ button{background:#ff9800;color:white;border:none;padding:12px 20px;border-radiu
 <script>
 function generateNotice(){
   let language = document.getElementById("language").value;
+  let noticeDate = document.getElementById("noticeDate").value;
+let noticeDateFormatted = new Date(noticeDate).toLocaleDateString('en-GB');
   let client = document.getElementById("clientName").value;
   let father = document.getElementById("fatherName").value;
   let address = document.getElementById("clientAddress").value;
@@ -88,15 +91,34 @@ if(diffDays >= 30){
   let notice = "";
 
   if(language === "hindi"){
-    notice = `विधिक नोटिस
-मेरे मुवक्किल ${client}, पुत्र श्री ${father}, निवासी ${address}, मोबाइल नं. ${mobile} की ओर से। 
+  notice = `
 
+विधिक नोटिस
+
+दिनांक: ${noticeDateFormatted}
+
+प्रेषक:
+
+अधिवक्ता ब्रजेश राजोरिया
+जिला न्यायालय, ग्वालियर (म.प्र.)
+मोबाइल: 7566098001
+ईमेल: Brajeshrajoriya9@gmail.com
+पता: B-17, गौतम नगर, मुरार, ग्वालियर (म.प्र.)
+
+मेरे मुवक्किल श्री ${client},
+पुत्र/पति श्री ${father},
+निवासी ${address},
+मोबाइल नं. ${mobile}
+की ओर से।
 
 प्रति,
-${opponent}
-${opponentAddress}
 
-विषय: धनराशि वसूली हेतु विधिक नोटिस।
+श्री ${opponent}
+पुत्र/पति श्री ${opponentFather}
+निवासी ${opponentAddress}
+मोबाइल नं. ${opponentMobile}
+
+विषय: आपके ऊपर देय एवं बकाया राशि रुपये ₹${amount}/- की धनराशि की वापसी, वसूली एवं ब्याज भुगतान हेतु विधिक नोटिस।
 
 महोदय,
 
