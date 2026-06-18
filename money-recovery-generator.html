@@ -28,8 +28,11 @@ button{background:#ff9800;color:white;border:none;padding:12px 20px;border-radiu
 <input id="opponentName" placeholder="Opposite Party Name">
 <input id="opponentAddress" placeholder="Opposite Party Address">
 <input id="amount" placeholder="Amount">
-<input id="loanDate" placeholder="Loan Date">
-<input id="returnDate" placeholder="Return Date">
+<label>Loan Date</label>
+<input type="date" id="loanDate">
+
+<label>Return Date</label>
+<input type="date" id="returnDate">
 <textarea id="facts" rows="5" placeholder="Facts / Details"></textarea>
 
 <button onclick="generateNotice()">Generate Notice</button>
@@ -48,6 +51,8 @@ function generateNotice(){
   let amount = document.getElementById("amount").value;
   let loanDate = document.getElementById("loanDate").value;
   let returnDate = document.getElementById("returnDate").value;
+  let loanDateFormatted = new Date(loanDate).toLocaleDateString('en-GB');
+let returnDateFormatted = new Date(returnDate).toLocaleDateString('en-GB');
   let facts = document.getElementById("facts").value;
 
   let notice = "";
@@ -68,9 +73,9 @@ ${opponentAddress}
 
 महोदय,
 
-मेरे मुवक्किल ने दिनांक ${loanDate} को आपको ₹${amount} प्रदान किए थे।
+मेरे मुवक्किल ने दिनांक ${loanDateFormatted} को आपको ₹${amount} प्रदान किए थे।
 
-आपने उक्त राशि ${returnDate} तक वापस करने का आश्वासन दिया था।
+आपने उक्त राशि ${returnDateFormatted} तक वापस करने का आश्वासन दिया था।
 
 तथ्य:
 ${facts}
@@ -96,9 +101,9 @@ Subject: Legal Notice for Recovery of Money.
 
 Sir/Madam,
 
-My client advanced an amount of ₹${amount} to you on ${loanDate}.
+My client advanced an amount of ₹${amount} to you on ${loanDateFormatted}.
 
-You assured repayment on or before ${returnDate}.
+You assured repayment on or before ${returnDateFormatted}.
 
 Facts:
 ${facts}
