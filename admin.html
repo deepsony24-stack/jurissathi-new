@@ -41,6 +41,7 @@ if(password !== "Raj@1402"){
     <h3 id="visitorCount">Total Visitors: Loading...</h3>
     <h3 id="todayVisitors">Today Visitors: Loading...</h3>
 <h3 id="monthVisitors">Monthly Visitors: Loading...</h3>
+    <h3 id="liveUsers">🟢 Live Users: 0</h3>
 </div>
 <h2>Consultation Leads</h2>
   <h3 id="totalLeads">Total Leads: 0</h3>
@@ -78,6 +79,8 @@ async function loadVisitors(){
 
   if(visitorSnap.exists()){
     const data = visitorSnap.data();
+      document.getElementById("liveUsers").innerText =
+"🟢 Live Users: 1";
       document.getElementById("todayVisitors").innerText =
   "Today Visitors: " + (data.todayVisitors || 0);
 
