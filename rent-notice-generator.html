@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rent Notice Draft | JurisSathi</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0b1220;color:white;padding:20px}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+}
+
+button{
+    background:#ff9800;
+    color:white;
+    border:none;
+    padding:12px 20px;
+}
+
+#output{
+    display:none;
+    background:white;
+    color:black;
+    padding:20px;
+}
+
+.row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+    .row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+
+@media(max-width:768px){
+    .row{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1>Rent Notice Draft</h1>
+<h3>Advocate Details</h3>
+
+<div class="row">
+    <input id="advName" placeholder="Advocate Name">
+    <input id="enrollmentNo" placeholder="Enrollment Number">
+</div>
+
+<div class="row">
+    <input id="advMobile" placeholder="Mobile Number">
+    <input id="advEmail" placeholder="Email Address">
+</div>
+
+<input id="advCourt" placeholder="Court Details">
+
+<input id="advAddress" placeholder="Office Address">
+<label>Output Language</label>
+<select id="language">
+<option value="hindi">Generate in Hindi</option>
+<option value="english">Generate in English</option>
+</select>
+<label>Notice Date</label>
+<input type="date" id="noticeDate">
+    <h3>Client Details</h3>
+   <div class="row">
+    <input id="clientName" placeholder="Client Name">
+    <input id="fatherName" placeholder="Father/Husband Name">
+</div>
+
+<div class="row">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="clientAddress" placeholder="Client Address">
+</div>
+   <h3>Tenant Details</h3>
+
+<div class="row">
+    <input id="tenantName" placeholder="Tenant Name">
+    <input id="tenantFather" placeholder="Tenant Father/Husband Name">
+</div>
+
+<div class="row">
+    <input id="tenantMobile" placeholder="Tenant Mobile Number">
+    <input id="tenantAddress" placeholder="Tenant Address">
+</div>
+
+<h3>Property Details</h3>
+
+<input id="propertyAddress" placeholder="Property Address">
+
+<h3>Rent Details</h3>
+
+<div class="row">
+    <input id="monthlyRent" placeholder="Monthly Rent">
+    <input id="arrearsAmount" placeholder="Total Arrears Amount">
+</div>
+
+<div class="row">
+    <input type="date" id="rentFrom">
+    <input type="date" id="rentTo">
+</div>
+</div>
+
+<button onclick="generateNotice()">Generate Notice</button>
+  <button onclick="downloadWord()">Download Word</button>
+
+<button onclick="downloadPDF()">Download PDF</button>
+
+<div id="output"></div>
+
+<script>
+function generateNotice(){
+  let language = document.getElementById("language").value;
+  let noticeDate = document.getElementById("noticeDate").value;
+let noticeDateFormatted = new Date(noticeDate).toLocaleDateString('en-GB');
+   let advName = document.getElementById("advName").value;
+let enrollmentNo = document.getElementById("enrollmentNo").value;
+let advCourt = document.getElementById("advCourt").value;
+let advMobile = document.getElementById("advMobile").value;
+let advEmail = document.getElementById("advEmail").value;
+let advAddress = document.getElementById("advAddress").value; 
+  let client = document.getElementById("clientName").value;
+  let father = document.getElementById("fatherName").value;
+  let address = document.getElementById("clientAddress").value;
+  let mobile = document.getElementById("mobile").value;
+  let tenantName = document.getElementById("tenantName").value;
+let tenantFather = document.getElementById("tenantFather").value;
+let tenantAddress = document.getElementById("tenantAddress").value;
+let tenantMobile = document.getElementById("tenantMobile").value;
+
+let propertyAddress = document.getElementById("propertyAddress").value;
+
+let monthlyRent = document.getElementById("monthlyRent").value;
+let arrearsAmount = document.getElementById("arrearsAmount").value;
+
+let rentFrom = document.getElementById("rentFrom").value;
+let rentTo = document.getElementById("rentTo").value;
+
+let rentFromFormatted = new Date(rentFrom).toLocaleDateString("en-GB");
+let rentToFormatted = new Date(rentTo).toLocaleDateString("en-GB");
+
+  let notice = "";
+
+  if(language === "hindi"){
+  notice = `
+
+विधिक नोटिस
+
+दिनांक: ${noticeDateFormatted}
+
+प्रेषक:
+
+अधिवक्ता ${advName}
+${advCourt}
+
+मोबाइल: ${advMobile}
+ईमेल: ${advEmail}
+पता: ${advAddress}
+
+मेरे मुवक्किल की ओर से:
+
+नाम : ${client}
+पिता/पति का नाम : ${father}
+पता : ${address}
+मोबाइल नं. : ${mobile}
+
+प्रति,
+
+नाम : ${tenantName}
+पिता/पति का नाम : ${tenantFather}
+पता : ${tenantAddress}
+मोबाइल नं. : ${tenantMobile}
+
+विषय: बकाया किराया वसूली, किरायेदारी समाप्ति एवं परिसर का रिक्त कब्जा प्राप्त करने हेतु विधिक नोटिस।
+
+महोदय/महोदया,
+
+मेरे मुवक्किल के निर्देशानुसार आपको निम्नलिखित विधिक नोटिस प्रेषित किया जाता है:
+
+1. कि मेरे मुवक्किल उक्त संपत्ति, स्थित ${propertyAddress}, के विधिसम्मत एवं निर्विवाद स्वामी/मकान मालिक हैं।
+2. कि आपको मेरे मुवक्किल द्वारा उक्त परिसर में मासिक किराया ₹${monthlyRent}/- पर किरायेदार के रूप में रखा गया था।
+3. कि आपके एवं मेरे मुवक्किल के मध्य मकान मालिक एवं किरायेदार का संबंध स्थापित हुआ तथा आपने किरायेदारी की सभी शर्तों का पालन करने का आश्वासन दिया था।
+4. कि किरायेदारी की शर्तों के अनुसार आपको प्रत्येक माह निर्धारित समय पर नियमित रूप से किराया अदा करना था।
+5. कि आपने उक्त परिसर का उपयोग एवं कब्जा बनाए रखने के बावजूद नियमित किराया भुगतान नहीं किया तथा भुगतान में निरंतर चूक की है।
+6. कि अवधि ${rentFromFormatted} से ${rentToFormatted} तक का कुल ₹${arrearsAmount}/- (रुपये __________ मात्र) किराया बकाया है, जो आपके द्वारा देय है।
+7. कि मेरे मुवक्किल द्वारा आपको अनेक अवसरों पर व्यक्तिगत रूप से, दूरभाष, संदेश एवं अन्य माध्यमों से बकाया किराया जमा करने हेतु कहा गया, किन्तु आपने भुगतान नहीं किया।
+8. कि आपके द्वारा लगातार किराया भुगतान न किए जाने के कारण मेरे मुवक्किल को आर्थिक हानि, मानसिक परेशानी एवं अनावश्यक असुविधा का सामना करना पड़ा है।
+9. कि आपका उक्त आचरण किरायेदारी की शर्तों का गंभीर उल्लंघन है तथा आप एक डिफॉल्टर किरायेदार (Defaulting Tenant) के रूप में उत्तरदायी हैं।
+10. कि आपके द्वारा किराया न चुकाए जाने के कारण मेरे मुवक्किल अब आपके साथ किरायेदारी संबंध जारी रखने के इच्छुक नहीं हैं।
+11. कि इस विधिक नोटिस के माध्यम से आपकी किरायेदारी तत्काल प्रभाव से समाप्त (Terminate) की जाती है।
+12. कि आपको निर्देशित किया जाता है कि इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर ₹${arrearsAmount}/- की संपूर्ण बकाया किराया राशि का भुगतान करें।
+13. कि आपको उक्त अवधि के भीतर परिसर का शांतिपूर्ण, रिक्त एवं विधिसम्मत कब्जा मेरे मुवक्किल को सौंपना होगा।
+14. कि निर्धारित अवधि के उपरांत आपका परिसर पर कब्जा पूर्णतः अनधिकृत (Unauthorized Occupation) माना जाएगा तथा आप हर्जाना (Damages), मेस्ने प्रॉफिट्स (Mesne Profits) एवं अन्य देय क्षतिपूर्ति राशि अदा करने के लिए उत्तरदायी होंगे।
+15. कि यदि आप उपर्युक्त मांगों का पालन करने में विफल रहते हैं, तो मेरे मुवक्किल आपके विरुद्ध सक्षम न्यायालय के समक्ष बेदखली (Eviction), बकाया किराया वसूली, हर्जाना, मेस्ने प्रॉफिट्स, वाद व्यय, अधिवक्ता शुल्क तथा अन्य उपलब्ध विधिक राहतों की प्राप्ति हेतु उचित दीवानी एवं अन्य विधिक कार्यवाही प्रारंभ करने के लिए स्वतंत्र एवं बाध्य होंगे, जिसकी समस्त जिम्मेदारी, व्यय एवं परिणाम आपके स्वयं के जोखिम पर होंगे।
+
+अतः आपको अंतिम अवसर प्रदान किया जाता है कि आप इस विधिक नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर समस्त बकाया किराया राशि का भुगतान कर उक्त परिसर का शांतिपूर्ण एवं रिक्त कब्जा मेरे मुवक्किल को सौंप दें।
+अन्यथा मेरे मुवक्किल बिना किसी अन्य सूचना अथवा पत्राचार के आपके विरुद्ध सक्षम न्यायालय में उपयुक्त विधिक कार्यवाही प्रारंभ करेंगे, जिसके समस्त परिणामों, व्ययों एवं दायित्वों के लिए आप स्वयं उत्तरदायी होंगे।
+
+भवदीय,
+
+(${advName})
+अधिवक्ता
+
+पंजीयन क्रमांक: ${enrollmentNo}
+
+नोटः इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख एवं भविष्य में आवश्यक वैधानिक/न्यायालयीन कार्यवाही हेतु सुरक्षित रखी गई है।
+`;  
+
+      
+  } else {
+    notice = `LEGAL NOTICE
+
+Date: ${noticeDateFormatted}
+
+FROM:
+
+Adv. ${advName}
+${advCourt}
+
+Mobile : ${advMobile}
+Email  : ${advEmail}
+Address: ${advAddress}
+
+UNDER INSTRUCTIONS FROM AND ON BEHALF OF MY CLIENT:
+
+Name           : ${client}
+S/o, D/o, W/o  : ${father}
+Address        : ${address}
+Mobile No.     : ${mobile}
+
+TO,
+
+Name           : ${opponent}
+S/o, D/o, W/o  : ${opponentFather}
+Address        : ${opponentAddress}
+Mobile No.     : ${opponentMobile}
+
+SUBJECT: Legal Notice for Recovery of Outstanding Amount of ₹${amount}/- along with Interest.
+
+Sir/Madam,
+
+Under instructions from and on behalf of my client, Mr./Ms. ${client}, I hereby issue and serve upon you the following Legal Notice for your information and necessary compliance:
+
+1. That you and my client are known to each other and shared cordial relations based on mutual trust, confidence and goodwill.
+2. That due to your urgent financial requirement, particularly for ${purpose}, you approached my client and requested financial assistance.
+3. That relying upon your assurances and representations, my client advanced a total sum of ₹${amount}/-, out of which ₹${cashAmount}/- was paid in cash and ₹${onlineAmount}/- was transferred through Banking/UPI channels.
+4. That at the time of receiving the aforesaid amount, you expressly assured my client that the entire amount would be repaid within the agreed period.
+5. That despite the expiry of the agreed period, the outstanding amount has not been repaid by you and remains due and payable.
+6. That my client repeatedly contacted you through personal meetings, telephone calls, messages and other means requesting repayment of the outstanding amount, but no actual payment has been made.
+7. That despite repeated demands and reminders, you have avoided payment on one pretext or another and have failed to honour your commitment.
+8. That your conduct amounts to breach of trust and has caused financial loss, inconvenience and mental harassment to my client.
+9. That my client is legally entitled to recover the principal amount of ₹${amount}/- along with interest at the rate of ${interestRate}% per annum from the date of advancement of the loan until actual realization.
+10. That due to your default, my client has been compelled to incur unnecessary expenses and suffer financial hardship, for which you shall also be liable.
+11. That if the aforesaid amount is not paid within the stipulated period, my client shall be constrained to initiate appropriate legal proceedings before the competent court for recovery of the principal amount, interest, litigation expenses, advocate's fees and all other consequential reliefs, entirely at your risk, cost and consequences.
+
+Therefore, through this Legal Notice, you are hereby called upon to pay the entire outstanding amount along with applicable interest within 15 (Fifteen) days from the date of receipt of this notice.
+Failing compliance, my client shall initiate appropriate legal proceedings, including a Money Recovery Suit, before the competent court without any further reference to you.
+
+Kindly treat this notice as a final opportunity and ensure payment within the stipulated period.
+
+Yours Faithfully,
+
+(${advName})
+Advocate
+Enrollment No.: ${enrollmentNo}
+
+Note: A copy of this Legal Notice has been retained in office records for future legal proceedings and reference.`;
+  }
+
+  document.getElementById("output").innerText = notice;
+  document.getElementById("output").style.display = "block";
+}
+  function downloadWord() {
+
+let content = document.getElementById("output").innerText;
+
+let blob = new Blob([content], {
+type: "application/msword"
+});
+
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download = "Money_Recovery_Notice.doc";
+
+link.click();
+URL.revokeObjectURL(link.href);
+}
+  function downloadPDF() {
+
+    let content = document.getElementById("output").innerText;
+
+    let printWindow = window.open("", "_blank");
+
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Money Recovery Notice</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 40px;
+                    line-height: 1.6;
+                    white-space: pre-wrap;
+                }
+            </style>
+        </head>
+        <body>${content}</body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+}
+</script>
+
+</body>
+</html>
