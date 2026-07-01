@@ -362,9 +362,7 @@ notice.replace(/\n/g, "<br>");
   document.getElementById("output").style.display = "block";
 }
   function downloadWord() {
-
-document.getElementById("output").innerHTML = notice.replace(/\n/g, "<br>");
-
+let content = document.getElementById("output").innerHTML;
 let blob = new Blob([content], {
 type: "application/msword"
 });
