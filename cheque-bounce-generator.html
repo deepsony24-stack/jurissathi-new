@@ -89,33 +89,41 @@ button{
     <input id="mobile" placeholder="Mobile Number">
     <input id="clientAddress" placeholder="Client Address">
 </div>
-    <h3>Case Details</h3>
-   <div class="row">
-    <input id="opponentName" placeholder="Opposite Party Name">
-    <input id="opponentFather" placeholder="Opposite Party Father/Husband Name">
+   <h3>Cheque Details</h3>
+
+<div class="row">
+    <input id="chequeNumber" placeholder="Cheque Number">
+    <input type="date" id="chequeDate">
 </div>
 
 <div class="row">
-    <input id="opponentMobile" placeholder="Opposite Party Mobile Number">
-    <input id="amount" placeholder="Amount">
+    <input id="chequeAmount" placeholder="Cheque Amount">
+    <input id="transactionReason" placeholder="Transaction Reason">
 </div>
 
 <div class="row">
-    <input id="cashAmount" placeholder="Cash Amount">
-    <input id="onlineAmount" placeholder="Online / UPI Amount">
+    <input id="bankName" placeholder="Bank Name">
+    <input id="branchName" placeholder="Branch Name">
 </div>
 
 <div class="row">
-    <input id="purpose" placeholder="Purpose e.g. Medical Emergency">
-    <input id="interestRate" placeholder="Interest Rate e.g. 12">
+    <input type="date" id="presentationDate">
+    <input type="date" id="returnMemoDate">
 </div>
 
-<input id="opponentAddress" placeholder="Opposite Party Address">
+<input id="dishonourReason" placeholder="Dishonour Reason">
+
+<h3>Opponent Details</h3>
+
 <div class="row">
-    <input type="date" id="loanDate">
-    <input type="date" id="returnDate">
+    <input id="opponentName" placeholder="Opponent Name">
+    <input id="opponentFather" placeholder="Father / Husband Name">
 </div>
 
+<div class="row">
+    <input id="opponentMobile" placeholder="Opponent Mobile">
+    <input id="opponentAddress" placeholder="Opponent Address">
+</div>
 <button onclick="generateNotice()">Generate Notice</button>
   <button onclick="downloadWord()">Download Word</button>
 
@@ -139,42 +147,34 @@ let advAddress = document.getElementById("advAddress").value;
   let address = document.getElementById("clientAddress").value;
   let mobile = document.getElementById("mobile").value;
   let opponent = document.getElementById("opponentName").value;
-  let opponentAddress = document.getElementById("opponentAddress").value;
-  let amount = document.getElementById("amount").value;
-  let opponentFather = document.getElementById("opponentFather").value;
-
+ let opponentFather = document.getElementById("opponentFather").value;
 let opponentMobile = document.getElementById("opponentMobile").value;
 
-let cashAmount = document.getElementById("cashAmount").value;
+let chequeNumber = document.getElementById("chequeNumber").value;
 
-let onlineAmount = document.getElementById("onlineAmount").value;
+let chequeDate = document.getElementById("chequeDate").value;
+let chequeDateFormatted = new Date(chequeDate).toLocaleDateString("en-GB");
 
-let purpose = document.getElementById("purpose").value;
+let chequeAmount = document.getElementById("chequeAmount").value;
 
-let interestRate = document.getElementById("interestRate").value;
-  let loanDate = document.getElementById("loanDate").value;
-  let returnDate = document.getElementById("returnDate").value;
-  let loanDateFormatted = new Date(loanDate).toLocaleDateString('en-GB');
-let returnDateFormatted = new Date(returnDate).toLocaleDateString('en-GB');
-  let loan = new Date(loanDate);
-let ret = new Date(returnDate);
+let transactionReason = document.getElementById("transactionReason").value;
 
-let diffDays = Math.floor((ret - loan) / (1000 * 60 * 60 * 24));
+let bankName = document.getElementById("bankName").value;
+let branchName = document.getElementById("branchName").value;
 
-let returnPeriod = "";
+let presentationDate = document.getElementById("presentationDate").value;
+let presentationDateFormatted = new Date(presentationDate).toLocaleDateString("en-GB");
 
-if(diffDays >= 30){
-    returnPeriod = Math.floor(diffDays / 30) + " माह";
-}else{
-    returnPeriod = diffDays + " दिन";
-}
+let returnMemoDate = document.getElementById("returnMemoDate").value;
+let returnMemoDateFormatted = new Date(returnMemoDate).toLocaleDateString("en-GB");
 
+let dishonourReason = document.getElementById("dishonourReason").value;
   let notice = "";
 
   if(language === "hindi"){
   notice = `
 
-विधिक नोटिस
+वविधिक नोटिस
 
 दिनांक: ${noticeDateFormatted}
 
@@ -182,51 +182,72 @@ if(diffDays >= 30){
 
 अधिवक्ता ${advName}
 ${advCourt}
-मोबाइल: ${advMobile}
-ईमेल: ${advEmail}
-पता: ${advAddress}
 
-मेरे मुवक्किल श्री ${client},पुत्र/पति श्री ${father},निवासी ${address},
-मोबाइल नं. ${mobile}की ओर से।
+मोबाइल : ${advMobile}
+ईमेल : ${advEmail}
+पता : ${advAddress}
+
+मेरे मुवक्किल की ओर से:
+
+नाम : ${client}
+पिता/पति का नाम : ${father}
+पता : ${address}
+मोबाइल नं. : ${mobile}
 
 प्रति,
-श्री ${opponent},पुत्र श्री ${opponentFather}
-निवासी- ${opponentAddress}
-मोबाइल नं. ${opponentMobile}
 
-विषय: आपके ऊपर देय एवं बकाया राशि रुपये ₹${amount}/- की धनराशि की वापसी, वसूली एवं ब्याज भुगतान हेतु विधिक नोटिस।
+नाम : ${opponent}
+पिता/पति का नाम : ${opponentFather}
+पता : ${opponentAddress}
+मोबाइल नं. : ${opponentMobile}
 
-महोदय,
+विषय:
 
-मेरे मुवक्किल श्री ${client} के निर्देशानुसार एवं उनकी ओर से आपको यह विधिक नोटिस प्रेषित किया जा रहा है।
+परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत चेक अनादरण (Cheque Dishonour) के संबंध में विधिक नोटिस।
 
-1. कि आप एवं मेरे मुवक्किल परस्पर मित्र एवं परिचित रहे हैं तथा आपसी विश्वास एवं मधुर संबंधों के कारण आपने अपने परिवार की ${purpose} बताते हुए मेरे मुवक्किल से आर्थिक सहायता की मांग की थी।
-2. कि आपके अनुरोध एवं आश्वासनों पर विश्वास करते हुए मेरे मुवक्किल ने आपको कुल राशि रुपये ₹${amount}/- की धनराशि प्रदान की, जिसमें से राशि रुपये ₹${cashAmount}/- नकद तथा राशि रुपये ₹${onlineAmount}/- आपके द्वारा उपलब्ध कराए गए विभिन्न बैंक खातों/UPI खातों में विभिन्न अवसरों पर आपके निर्देशानुसार हस्तांतरित की गई।
-3. कि उक्त धनराशि प्राप्त करते समय आपने मेरे मुवक्किल को यह स्पष्ट आश्वासन दिया था कि आप संपूर्ण राशि ${returnPeriod} की अवधि के भीतर वापस कर देंगे।
-4. कि आपके बार-बार अनुरोध, विश्वास दिलाने एवं पारिवारिक आवश्यकता को दृष्टिगत रखते हुए मेरे मुवक्किल ने स्वयं आर्थिक व्यवस्था कर आपको उक्त धनराशि उपलब्ध कराई, जिसके कारण मेरे मुवक्किल को आर्थिक भार वहन करना पड़ रहा है।
-5. कि आपके द्वारा प्राप्त उक्त धनराशि देय होने के बावजूद आज दिनांक तक वापस नहीं की गई है तथा दिनांक ${returnDateFormatted} को देय अवधि समाप्त हो जाने के पश्चात भी भुगतान नहीं किया गया है।
-6. कि मेरे मुवक्किल द्वारा आपको अनेक बार फोन कॉल, व्यक्तिगत संपर्क, व्हाट्सएप संदेश एवं अन्य माध्यमों से राशि लौटाने हेतु कहा गया, जिस पर आप लगातार भुगतान करने का आश्वासन देते रहे, किन्तु वास्तविक भुगतान नहीं किया।
-7. कि प्रत्येक अवसर पर राशि की मांग किए जाने पर आपने अपने दायित्व से इंकार नहीं किया, बल्कि समय-समय पर भुगतान करने का आश्वासन देते रहे, जिससे यह स्पष्ट है कि आपके ऊपर मेरे मुवक्किल की उक्त राशि विधिवत देय एवं बकाया है।
-8. कि वर्तमान समय में आप मेरे मुवक्किल के फोन कॉल एवं संदेशों का उत्तर नहीं दे रहे हैं तथा जानबूझकर संपर्क से बच रहे हैं, जिससे यह स्पष्ट परिलक्षित होता है कि आप जानबूझकर अपने वैधानिक दायित्व एवं देनदारी के निर्वहन से बच रहे हैं।
-9. कि उक्त लेन-देन एवं देय राशि के संबंध में उपलब्ध बैंकिंग अभिलेख, UPI ट्रांजेक्शन विवरण, इलेक्ट्रॉनिक रिकॉर्ड तथा अन्य साक्ष्य मेरे मुवक्किल के पास सुरक्षित एवं उपलब्ध हैं।
-10. कि आपके उक्त कृत्य के कारण मेरे मुवक्किल को अनावश्यक आर्थिक हानि, मानसिक प्रताड़ना एवं असुविधा का सामना करना पड़ रहा है तथा आपके ऊपर मेरे मुवक्किल की कुल ₹${amount}/- की राशि विधिवत देय एवं बकाया है।
-11. कि मेरे मुवक्किल उक्त मूलधन राशि ₹${amount}/- पर देय तिथि से वास्तविक भुगतान होने तक ${interestRate}% (प्रतिशत) वार्षिक की दर से ब्याज प्राप्त करने के भी विधिक रूप से अधिकारी हैं।
+महोदय/महोदया,
 
-अतः आपको इस विधिक नोटिस के माध्यम से अंतिम अवसर प्रदान करते हुए निर्देशित किया जाता है कि इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर मेरे मुवक्किल की देय एवं बकाया मूलधन राशि ₹${amount}/- तथा उस पर देय ब्याज का पूर्ण भुगतान करें।
-अन्यथा मेरे मुवक्किल आपके विरुद्ध सक्षम न्यायालय के समक्ष धनराशि वसूली वाद (Money Recovery Suit), मूलधन, ब्याज, वाद व्यय, अधिवक्ता शुल्क एवं अन्य उपलब्ध वैधानिक राहत प्राप्त करने हेतु आवश्यक कार्यवाही प्रारंभ करने के लिए बाध्य होंगे, साथ ही आवश्यक होने पर आपके विरुद्ध अन्य उपलब्ध दीवानी एवं विधिक कार्यवाही भी प्रारंभ की जा सकेगी।
-जिसकी समस्त जिम्मेदारी, न्यायालयीन व्यय, अधिवक्ता शुल्क एवं परिणाम आपके स्वयं के जोखिम एवं उत्तरदायित्व पर होंगे।
+मेरे मुवक्किल के स्पष्ट निर्देशों एवं अधिकार के आधार पर आपको यह विधिक नोटिस प्रेषित किया जा रहा है, जिससे आपको आपके द्वारा उत्पन्न विधिक दायित्वों एवं उनके उल्लंघन के परिणामों से विधिवत अवगत कराया जा सके।
 
-कृपया इस नोटिस को अंतिम अवसर मानते हुए निर्धारित अवधि में भुगतान सुनिश्चित करें।
-        
+1. कि आपके एवं मेरे मुवक्किल के मध्य ${transactionReason} के संबंध में एक वैध, विधिसम्मत एवं विधिक रूप से प्रवर्तनीय वित्तीय देयता (Legally Enforceable Debt or Liability) विद्यमान थी, जिसका निर्वहन करना आपका वैधानिक दायित्व था।
+2. कि उक्त वैध देयता के निर्वहन एवं भुगतान के उद्देश्य से आपने मेरे मुवक्किल के पक्ष में ₹${chequeAmount}/- (रुपये ${chequeAmount} मात्र) का चेक क्रमांक ${chequeNumber}, दिनांक ${chequeDateFormatted}, बैंक ${bankName}, शाखा ${branchName} से जारी किया।
+3. कि उपर्युक्त चेक आपने पूर्णतः स्वेच्छा, स्वतंत्र इच्छा एवं बिना किसी दबाव, अनुचित प्रभाव, प्रलोभन अथवा भ्रम के मेरे मुवक्किल को जारी किया था, जिससे आपके द्वारा उक्त वित्तीय देयता को स्वीकार किया जाना स्पष्ट रूप से सिद्ध होता है।
+4. कि मेरे मुवक्किल ने उक्त चेक को उसकी वैधानिक वैधता अवधि के भीतर, सद्भावना एवं विधि के अनुरूप दिनांक ${presentationDateFormatted} को अपने बैंक के माध्यम से भुगतान हेतु प्रस्तुत किया।
+5. कि उक्त चेक बैंक द्वारा दिनांक ${returnMemoDateFormatted} को "${dishonourReason}" कारण अंकित करते हुए अनादृत (Dishonoured) कर वापस कर दिया गया, जिसकी सूचना बैंक द्वारा जारी Return Memo के माध्यम से मेरे मुवक्किल को प्राप्त हुई।
+6. कि बैंक द्वारा जारी उक्त Return Memo चेक अनादरण का प्रथमदृष्टया वैधानिक साक्ष्य है तथा यह स्पष्ट रूप से प्रदर्शित करता है कि आप अपने वैधानिक एवं वित्तीय दायित्वों का निर्वहन करने में विफल रहे हैं।
+7. कि आपके द्वारा ऐसा चेक जारी किया जाना, जिसका भुगतान प्रस्तुत किए जाने पर संभव नहीं हो सका, आपके वैधानिक दायित्वों के गंभीर उल्लंघन को दर्शाता है तथा इससे मेरे मुवक्किल को आर्थिक हानि, मानसिक पीड़ा एवं अनावश्यक असुविधा का सामना करना पड़ा है।
+8. कि चेक के अनादरण की सूचना प्राप्त होने के उपरांत भी मेरे मुवक्किल ने आपको अनेक अवसरों पर व्यक्तिगत रूप से, दूरभाष, संदेश तथा अन्य उपलब्ध माध्यमों से बकाया राशि का भुगतान करने हेतु अनुरोध किया, तथापि आपने न तो भुगतान किया और न ही कोई संतोषजनक उत्तर अथवा स्पष्टीकरण प्रस्तुत किया।
+9. कि आपके उक्त आचरण से यह स्पष्ट रूप से सिद्ध होता है कि आपने अपने वैधानिक एवं संविदात्मक दायित्वों का जानबूझकर उल्लंघन किया है, जिसके परिणामस्वरूप मेरे मुवक्किल को आर्थिक हानि, मानसिक प्रताड़ना, समय की क्षति तथा अनावश्यक विधिक व्यय वहन करना पड़ रहा है।
+10. कि आपके द्वारा जारी किया गया उपर्युक्त चेक मेरे मुवक्किल के पक्ष में विद्यमान वैध एवं विधिक रूप से प्रवर्तनीय ऋण/देयता (Legally Enforceable Debt or Liability) के भुगतान हेतु जारी किया गया था। अतः उक्त चेक का अनादरण परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत दंडनीय अपराध की श्रेणी में आता है।
+11. कि यह विधिक नोटिस परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के प्रावधानों के अनुपालन में आपको विधिवत प्रेषित किया जा रहा है तथा आपको अंतिम एवं पर्याप्त अवसर प्रदान किया जाता है कि आप इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस की वैधानिक अवधि के भीतर ₹${chequeAmount}/- (रुपये __________ मात्र) की संपूर्ण राशि मेरे मुवक्किल को अदा करें।
+12. कि यदि आप उपर्युक्त वैधानिक अवधि के भीतर भुगतान करने में विफल रहते हैं, तो मेरे मुवक्किल के पक्ष में आपके विरुद्ध परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत सक्षम न्यायालय में आपराधिक परिवाद (Criminal Complaint) प्रस्तुत करने का विधिक कारण (Cause of Action) उत्पन्न हो जाएगा।
+13. कि उपर्युक्त आपराधिक कार्यवाही के अतिरिक्त मेरे मुवक्किल आपके विरुद्ध मूल राशि की वसूली, विधि एवं तथ्यों के अनुसार देय ब्याज, हर्जाना (Damages), वाद व्यय, अधिवक्ता शुल्क तथा अन्य उपलब्ध दीवानी एवं वैधानिक राहतों की प्राप्ति हेतु पृथक विधिक कार्यवाही प्रारंभ करने का अधिकार सुरक्षित रखते हैं।
+14. कि ऐसी समस्त विधिक कार्यवाही सक्षम अधिकारिता (Competent Jurisdiction) वाले न्यायालय के समक्ष प्रारंभ की जाएगी तथा उससे उत्पन्न होने वाले समस्त न्यायालयीन व्यय, अधिवक्ता शुल्क, न्यायालय शुल्क एवं अन्य विधिक परिणामों के लिए आप स्वयं पूर्णतः उत्तरदायी होंगे।
+15. कि आपको इस विधिक नोटिस के माध्यम से अंतिम अवसर प्रदान किया जाता है कि आप इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर ₹${chequeAmount}/- (रुपये __________ मात्र) की संपूर्ण राशि मेरे मुवक्किल को अदा कर अपने वैधानिक दायित्व का निर्वहन करें तथा भविष्य में किसी भी प्रकार के अनावश्यक विधिक विवाद से बचें।
+16. कि यदि आप उक्त वैधानिक अवधि के भीतर भुगतान करने में असफल रहते हैं, तो मेरे मुवक्किल आपके विरुद्ध परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत सक्षम न्यायालय में आपराधिक परिवाद प्रस्तुत करने के अतिरिक्त अन्य सभी उपलब्ध विधिक उपचार अपनाने के लिए स्वतंत्र एवं बाध्य होंगे।
+17. कि ऐसी स्थिति में मेरे मुवक्किल आपके विरुद्ध मूल राशि, ब्याज (यदि विधि एवं तथ्यों के अनुसार देय हो), हर्जाना (Damages), मेस्ने लाभ (जहाँ लागू हो), वाद व्यय, अधिवक्ता शुल्क तथा अन्य समस्त विधिक व्ययों की वसूली हेतु पृथक दीवानी कार्यवाही प्रारंभ करने का अधिकार भी सुरक्षित रखते हैं।
+18. कि आपके द्वारा भुगतान न किए जाने की स्थिति में प्रारंभ की जाने वाली समस्त आपराधिक एवं दीवानी कार्यवाहियों से उत्पन्न होने वाले सभी परिणाम, न्यायालयीन व्यय, अधिवक्ता शुल्क, न्यायालय शुल्क एवं अन्य दायित्वों के लिए आप स्वयं पूर्णतः उत्तरदायी होंगे।
+19. कि इस विधिक नोटिस को आपको अंतिम एवं पर्याप्त अवसर प्रदान करने के उद्देश्य से प्रेषित किया जा रहा है। यदि आप इस अवसर का लाभ नहीं उठाते हैं, तो यह माना जाएगा कि आपने अपने विधिक दायित्वों का स्वेच्छा से पालन करने से इंकार कर दिया है।
+20. अतः आपको अंतिम रूप से निर्देशित एवं अपेक्षित किया जाता है कि आप इस विधिक नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर ₹${chequeAmount}/- (रुपये __________ मात्र) की संपूर्ण राशि मेरे मुवक्किल को अदा करें। अन्यथा मेरे मुवक्किल आपके विरुद्ध बिना किसी अन्य सूचना अथवा पत्राचार के परक्राम्य लिखत अधिनियम, 1881 की धारा 138 तथा अन्य लागू विधिक प्रावधानों के अंतर्गत सक्षम न्यायालय में उपयुक्त आपराधिक एवं दीवानी कार्यवाही प्रारंभ करेंगे, जिसकी समस्त जिम्मेदारी, व्यय एवं परिणाम आपके स्वयं के जोखिम, उत्तरदायित्व एवं दायित्व पर होंगे।
 
- भवदीय,
 
-${advName}
+
+
+---
+
+भवदीय,
+
+(${advName})
 अधिवक्ता
-नामांकन क्रमांक: ${enrollmentNo}
+
+पंजीयन क्रमांक: ${enrollmentNo}
 
 
-नोटः इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख एवं भविष्य में आवश्यक वैधानिक/न्यायालयीन कार्यवाही हेतु सुरक्षित रखी गई है।`;  
+---
+
+नोटः
+
+इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख, भविष्य में आवश्यक वैधानिक एवं न्यायालयीन कार्यवाही तथा साक्ष्य प्रयोजनार्थ सुरक्षित रखी गई है।
 
       
   } else {
