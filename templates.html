@@ -110,7 +110,7 @@ Ready-to-use professional legal drafts generated from your details.
 
     <p class="price">₹199</p>
 
-<a href="#" class="btn" onclick="payAndUnlock('cheque-bounce',199,'cheque-bounce-generator.html'); return false;">🔓 Unlock Draft</a>
+<a href="javascript:void(0)" class="btn" onclick="payAndUnlock('cheque-bounce',199,'cheque-bounce-generator.html')">🔓 Unlock Draft</a>
 
     <p class="disclaimer">
         यह केवल सामान्य कानूनी प्रारूप है। प्रत्येक मामले के तथ्य अलग हो सकते हैं।<br>
@@ -150,7 +150,30 @@ function payAndUnlock(draftId, amount, redirectPage) {
     var rzp = new Razorpay(options);
     rzp.open();
 }
-</script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+function payAndUnlock(draftId, amount, redirectPage) {
+    alert("Payment window opening...");
+
+    var options = {
+        key: "rzp_live_T8LI6UgK5YdOFP",
+        amount: amount * 100,
+        currency: "INR",
+        name: "JurisSathi",
+        description: draftId + " Draft Access",
+        handler: function (response) {
+            alert("Payment Successful. Draft unlocked.");
+            window.location.href = redirectPage;
+        },
+        theme: {
+            color: "#ff9800"
+        }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+}
+</script>
 </body>
 </html>
