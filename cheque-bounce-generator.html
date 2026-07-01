@@ -357,7 +357,8 @@ Note:
 A copy of this Legal Notice has been retained in our office records for future reference and for use in any statutory, judicial or other legal proceedings, if so required. `;
   }
 
-  document.getElementById("output").innerHTML = notice;
+ document.getElementById("output").innerHTML =
+notice.replace(/\n/g, "<br>");
   document.getElementById("output").style.display = "block";
 }
   function downloadWord() {
