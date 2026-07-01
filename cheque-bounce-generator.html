@@ -218,9 +218,10 @@ let dishonourReason = document.getElementById("dishonourReason").value;
   let notice = "";
 
   if(language === "hindi"){
-  notice = `
-
-विधिक नोटिस
+ notice = `
+<div style="text-align:center;">
+<h2>विधिक नोटिस</h2>
+</div>
 
 दिनांक: ${noticeDateFormatted}
 
@@ -280,14 +281,13 @@ ${advCourt}
 
 
 ---
+<div style="text-align:right; margin-top:40px;">
+भवदीय,<br><br><br>
 
-भवदीय,
-
-(${advName})
-अधिवक्ता
-
+(${advName})<br>
+अधिवक्ता<br>
 पंजीयन क्रमांक: ${enrollmentNo}
-
+</div>
 
 ---
 
@@ -357,7 +357,7 @@ Note:
 A copy of this Legal Notice has been retained in our office records for future reference and for use in any statutory, judicial or other legal proceedings, if so required. `;
   }
 
-  document.getElementById("output").innerText = notice;
+  document.getElementById("output").innerHTML = notice;
   document.getElementById("output").style.display = "block";
 }
   function downloadWord() {
