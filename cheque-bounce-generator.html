@@ -297,8 +297,10 @@ ${advCourt}
 
       
   } else {
-    notice = `
-      LEGAL NOTICE
+   notice = `
+<div style="text-align:center;">
+<h2>LEGAL NOTICE</h2>
+</div>
 
 Date: ${noticeDateFormatted}
 From:
@@ -344,10 +346,13 @@ Under the express instructions and authority of my client, I hereby issue and se
 20. Therefore, you are hereby finally called upon and required to pay the entire cheque amount of ₹${chequeAmount}/- (Rupees ${chequeAmount} Only) to my client within 15 (Fifteen) days from the date of receipt of this Legal Notice. Failing which, my client shall be constrained to initiate appropriate criminal proceedings under Section 138 of the Negotiable Instruments Act, 1881, along with such other civil and legal proceedings as may be available under law, before the Competent Court, entirely at your own risk, costs, consequences and liabilities, without any further notice or correspondence.
 
 This Legal Notice is issued without prejudice to all other legal rights, claims and remedies available to my client under the applicable laws, all of which are hereby expressly reserved.
-Yours faithfully,
-${advName}
-Advocate
+<div style="text-align:right; margin-top:40px;">
+Yours Faithfully,<br><br><br>
+
+(${advName})<br>
+Advocate<br>
 Enrollment No.: ${enrollmentNo}
+</div>
 Note:
 A copy of this Legal Notice has been retained in our office records for future reference and for use in any statutory, judicial or other legal proceedings, if so required. `;
   }
