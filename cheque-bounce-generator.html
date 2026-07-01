@@ -99,13 +99,10 @@ button{
 </div>
 
 <div style="flex:1;">
-    <label>Cheque Date</label>
-   <small style="display:block;color:#ccc;margin-bottom:6px;">
-    Date printed on cheque
-</small>
+    <label>Cheque Date</label><br>
+    <small style="color:#ccc;">Date printed on cheque</small>
     <input type="date" id="chequeDate">
 </div>
-
 </div>
 
 <div class="row">
@@ -118,13 +115,19 @@ button{
     <input id="branchName" placeholder="Branch Name">
 </div>
 <div class="row">
-    <label>Presentation Date<br><small>Date cheque deposited in bank</small></label>
-    <label>Return Memo Date<br><small>Date shown on bank return memo</small></label>
+
+<div style="flex:1;">
+<label>Presentation Date</label>
+<small style="display:block;color:#ccc;">Date cheque deposited in bank</small>
+<input type="date" id="presentationDate">
 </div>
 
-<div class="row">
-    <input type="date" id="presentationDate">
-    <input type="date" id="returnMemoDate">
+<div style="flex:1;">
+<label>Return Memo Date</label>
+<small style="display:block;color:#ccc;">Date shown on Bank Return Memo</small>
+<input type="date" id="returnMemoDate">
+</div>
+
 </div>
 
 <input id="dishonourReason" placeholder="Dishonour Reason">
