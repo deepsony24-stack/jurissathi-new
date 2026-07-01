@@ -362,19 +362,41 @@ notice.replace(/\n/g, "<br>");
   document.getElementById("output").style.display = "block";
 }
   function downloadWord() {
-let content = document.getElementById("output").innerHTML;
-let blob = new Blob([content], {
-type: "application/msword"
-});
 
-let link = document.createElement("a");
+    let content = document.getElementById("output").innerHTML;
 
-link.href = URL.createObjectURL(blob);
+    let wordContent = `
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <style>
+    body{
+        font-family:"Times New Roman",serif;
+        font-size:14pt;
+        line-height:1.7;
+        margin:40px;
+    }
+    h2{
+        text-align:center;
+    }
+    </style>
+    </head>
+    <body>
+    ${content}
+    </body>
+    </html>
+    `;
 
-link.download = "Money_Recovery_Notice.doc";
+    let blob = new Blob([wordContent], {
+        type: "application/msword;charset=utf-8"
+    });
 
-link.click();
-URL.revokeObjectURL(link.href);
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Cheque_Bounce_Notice.doc";
+    link.click();
+    URL.revokeObjectURL(link.href);
+
 }
   function downloadPDF() {
 
