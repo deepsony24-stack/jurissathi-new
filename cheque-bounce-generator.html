@@ -92,11 +92,18 @@ button{
    <h3>Cheque Details</h3>
 
 <div class="row">
+
+<div style="flex:2;">
+    <label>Cheque Number</label>
     <input id="chequeNumber" placeholder="Cheque Number">
-    <div>
-        <label>Cheque Date<br><small>Date printed on cheque</small></label>
-        <input type="date" id="chequeDate">
-    </div>
+</div>
+
+<div style="flex:1;">
+    <label>Cheque Date</label>
+    <small style="display:block;color:#ccc;">Date printed on cheque</small>
+    <input type="date" id="chequeDate">
+</div>
+
 </div>
 
 <div class="row">
