@@ -363,7 +363,7 @@ notice.replace(/\n/g, "<br>");
 }
   function downloadWord() {
 
-let content = document.getElementById("output").innerHTML;
+document.getElementById("output").innerHTML = notice.replace(/\n/g, "<br>");
 
 let blob = new Blob([content], {
 type: "application/msword"
