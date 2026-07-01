@@ -363,7 +363,7 @@ notice.replace(/\n/g, "<br>");
 }
   function downloadWord() {
 
-let content = document.getElementById("output").innerText;
+let content = document.getElementById("output").innerHTML;
 
 let blob = new Blob([content], {
 type: "application/msword"
@@ -380,7 +380,7 @@ URL.revokeObjectURL(link.href);
 }
   function downloadPDF() {
 
-    let content = document.getElementById("output").innerText;
+   let content = document.getElementById("output").innerHTML;
 
     let printWindow = window.open("", "_blank");
 
