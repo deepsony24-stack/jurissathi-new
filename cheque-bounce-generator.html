@@ -1,1 +1,342 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheque Bounce Notice Draft | JurisSathi</title>
+
+<style>
+body{font-family:Arial,sans-serif;background:#0b1220;color:white;padding:20px}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+}
+
+button{
+    background:#ff9800;
+    color:white;
+    border:none;
+    padding:12px 20px;
+}
+
+#output{
+    display:none;
+    background:white;
+    color:black;
+    padding:20px;
+}
+
+.row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+    .row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+
+@media(max-width:768px){
+    .row{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1>Cheque Bounce Notice Draft</h1>
+<h3>Advocate Details</h3>
+
+<div class="row">
+    <input id="advName" placeholder="Advocate Name">
+    <input id="enrollmentNo" placeholder="Enrollment Number">
+</div>
+
+<div class="row">
+    <input id="advMobile" placeholder="Mobile Number">
+    <input id="advEmail" placeholder="Email Address">
+</div>
+
+<input id="advCourt" placeholder="Court Details">
+
+<input id="advAddress" placeholder="Office Address">
+<label>Output Language</label>
+<select id="language">
+<option value="hindi">Generate in Hindi</option>
+<option value="english">Generate in English</option>
+</select>
+<label>Notice Date</label>
+<input type="date" id="noticeDate">
+    <h3>Client Details</h3>
+   <div class="row">
+    <input id="clientName" placeholder="Client Name">
+    <input id="fatherName" placeholder="Father/Husband Name">
+</div>
+
+<div class="row">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="clientAddress" placeholder="Client Address">
+</div>
+    <h3>Case Details</h3>
+   <div class="row">
+    <input id="opponentName" placeholder="Opposite Party Name">
+    <input id="opponentFather" placeholder="Opposite Party Father/Husband Name">
+</div>
+
+<div class="row">
+    <input id="opponentMobile" placeholder="Opposite Party Mobile Number">
+    <input id="amount" placeholder="Amount">
+</div>
+
+<div class="row">
+    <input id="cashAmount" placeholder="Cash Amount">
+    <input id="onlineAmount" placeholder="Online / UPI Amount">
+</div>
+
+<div class="row">
+    <input id="purpose" placeholder="Purpose e.g. Medical Emergency">
+    <input id="interestRate" placeholder="Interest Rate e.g. 12">
+</div>
+
+<input id="opponentAddress" placeholder="Opposite Party Address">
+<div class="row">
+    <input type="date" id="loanDate">
+    <input type="date" id="returnDate">
+</div>
+
+<button onclick="generateNotice()">Generate Notice</button>
+  <button onclick="downloadWord()">Download Word</button>
+
+<button onclick="downloadPDF()">Download PDF</button>
+
+<div id="output"></div>
+
+<script>
+function generateNotice(){
+  let language = document.getElementById("language").value;
+  let noticeDate = document.getElementById("noticeDate").value;
+let noticeDateFormatted = new Date(noticeDate).toLocaleDateString('en-GB');
+   let advName = document.getElementById("advName").value;
+let enrollmentNo = document.getElementById("enrollmentNo").value;
+let advCourt = document.getElementById("advCourt").value;
+let advMobile = document.getElementById("advMobile").value;
+let advEmail = document.getElementById("advEmail").value;
+let advAddress = document.getElementById("advAddress").value; 
+  let client = document.getElementById("clientName").value;
+  let father = document.getElementById("fatherName").value;
+  let address = document.getElementById("clientAddress").value;
+  let mobile = document.getElementById("mobile").value;
+  let opponent = document.getElementById("opponentName").value;
+  let opponentAddress = document.getElementById("opponentAddress").value;
+  let amount = document.getElementById("amount").value;
+  let opponentFather = document.getElementById("opponentFather").value;
+
+let opponentMobile = document.getElementById("opponentMobile").value;
+
+let cashAmount = document.getElementById("cashAmount").value;
+
+let onlineAmount = document.getElementById("onlineAmount").value;
+
+let purpose = document.getElementById("purpose").value;
+
+let interestRate = document.getElementById("interestRate").value;
+  let loanDate = document.getElementById("loanDate").value;
+  let returnDate = document.getElementById("returnDate").value;
+  let loanDateFormatted = new Date(loanDate).toLocaleDateString('en-GB');
+let returnDateFormatted = new Date(returnDate).toLocaleDateString('en-GB');
+  let loan = new Date(loanDate);
+let ret = new Date(returnDate);
+
+let diffDays = Math.floor((ret - loan) / (1000 * 60 * 60 * 24));
+
+let returnPeriod = "";
+
+if(diffDays >= 30){
+    returnPeriod = Math.floor(diffDays / 30) + " माह";
+}else{
+    returnPeriod = diffDays + " दिन";
+}
+
+  let notice = "";
+
+  if(language === "hindi"){
+  notice = `
+
+विधिक नोटिस
+
+दिनांक: ${noticeDateFormatted}
+
+प्रेषक:
+
+अधिवक्ता ${advName}
+${advCourt}
+मोबाइल: ${advMobile}
+ईमेल: ${advEmail}
+पता: ${advAddress}
+
+मेरे मुवक्किल श्री ${client},पुत्र/पति श्री ${father},निवासी ${address},
+मोबाइल नं. ${mobile}की ओर से।
+
+प्रति,
+श्री ${opponent},पुत्र श्री ${opponentFather}
+निवासी- ${opponentAddress}
+मोबाइल नं. ${opponentMobile}
+
+विषय: आपके ऊपर देय एवं बकाया राशि रुपये ₹${amount}/- की धनराशि की वापसी, वसूली एवं ब्याज भुगतान हेतु विधिक नोटिस।
+
+महोदय,
+
+मेरे मुवक्किल श्री ${client} के निर्देशानुसार एवं उनकी ओर से आपको यह विधिक नोटिस प्रेषित किया जा रहा है।
+
+1. कि आप एवं मेरे मुवक्किल परस्पर मित्र एवं परिचित रहे हैं तथा आपसी विश्वास एवं मधुर संबंधों के कारण आपने अपने परिवार की ${purpose} बताते हुए मेरे मुवक्किल से आर्थिक सहायता की मांग की थी।
+2. कि आपके अनुरोध एवं आश्वासनों पर विश्वास करते हुए मेरे मुवक्किल ने आपको कुल राशि रुपये ₹${amount}/- की धनराशि प्रदान की, जिसमें से राशि रुपये ₹${cashAmount}/- नकद तथा राशि रुपये ₹${onlineAmount}/- आपके द्वारा उपलब्ध कराए गए विभिन्न बैंक खातों/UPI खातों में विभिन्न अवसरों पर आपके निर्देशानुसार हस्तांतरित की गई।
+3. कि उक्त धनराशि प्राप्त करते समय आपने मेरे मुवक्किल को यह स्पष्ट आश्वासन दिया था कि आप संपूर्ण राशि ${returnPeriod} की अवधि के भीतर वापस कर देंगे।
+4. कि आपके बार-बार अनुरोध, विश्वास दिलाने एवं पारिवारिक आवश्यकता को दृष्टिगत रखते हुए मेरे मुवक्किल ने स्वयं आर्थिक व्यवस्था कर आपको उक्त धनराशि उपलब्ध कराई, जिसके कारण मेरे मुवक्किल को आर्थिक भार वहन करना पड़ रहा है।
+5. कि आपके द्वारा प्राप्त उक्त धनराशि देय होने के बावजूद आज दिनांक तक वापस नहीं की गई है तथा दिनांक ${returnDateFormatted} को देय अवधि समाप्त हो जाने के पश्चात भी भुगतान नहीं किया गया है।
+6. कि मेरे मुवक्किल द्वारा आपको अनेक बार फोन कॉल, व्यक्तिगत संपर्क, व्हाट्सएप संदेश एवं अन्य माध्यमों से राशि लौटाने हेतु कहा गया, जिस पर आप लगातार भुगतान करने का आश्वासन देते रहे, किन्तु वास्तविक भुगतान नहीं किया।
+7. कि प्रत्येक अवसर पर राशि की मांग किए जाने पर आपने अपने दायित्व से इंकार नहीं किया, बल्कि समय-समय पर भुगतान करने का आश्वासन देते रहे, जिससे यह स्पष्ट है कि आपके ऊपर मेरे मुवक्किल की उक्त राशि विधिवत देय एवं बकाया है।
+8. कि वर्तमान समय में आप मेरे मुवक्किल के फोन कॉल एवं संदेशों का उत्तर नहीं दे रहे हैं तथा जानबूझकर संपर्क से बच रहे हैं, जिससे यह स्पष्ट परिलक्षित होता है कि आप जानबूझकर अपने वैधानिक दायित्व एवं देनदारी के निर्वहन से बच रहे हैं।
+9. कि उक्त लेन-देन एवं देय राशि के संबंध में उपलब्ध बैंकिंग अभिलेख, UPI ट्रांजेक्शन विवरण, इलेक्ट्रॉनिक रिकॉर्ड तथा अन्य साक्ष्य मेरे मुवक्किल के पास सुरक्षित एवं उपलब्ध हैं।
+10. कि आपके उक्त कृत्य के कारण मेरे मुवक्किल को अनावश्यक आर्थिक हानि, मानसिक प्रताड़ना एवं असुविधा का सामना करना पड़ रहा है तथा आपके ऊपर मेरे मुवक्किल की कुल ₹${amount}/- की राशि विधिवत देय एवं बकाया है।
+11. कि मेरे मुवक्किल उक्त मूलधन राशि ₹${amount}/- पर देय तिथि से वास्तविक भुगतान होने तक ${interestRate}% (प्रतिशत) वार्षिक की दर से ब्याज प्राप्त करने के भी विधिक रूप से अधिकारी हैं।
+
+अतः आपको इस विधिक नोटिस के माध्यम से अंतिम अवसर प्रदान करते हुए निर्देशित किया जाता है कि इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर मेरे मुवक्किल की देय एवं बकाया मूलधन राशि ₹${amount}/- तथा उस पर देय ब्याज का पूर्ण भुगतान करें।
+अन्यथा मेरे मुवक्किल आपके विरुद्ध सक्षम न्यायालय के समक्ष धनराशि वसूली वाद (Money Recovery Suit), मूलधन, ब्याज, वाद व्यय, अधिवक्ता शुल्क एवं अन्य उपलब्ध वैधानिक राहत प्राप्त करने हेतु आवश्यक कार्यवाही प्रारंभ करने के लिए बाध्य होंगे, साथ ही आवश्यक होने पर आपके विरुद्ध अन्य उपलब्ध दीवानी एवं विधिक कार्यवाही भी प्रारंभ की जा सकेगी।
+जिसकी समस्त जिम्मेदारी, न्यायालयीन व्यय, अधिवक्ता शुल्क एवं परिणाम आपके स्वयं के जोखिम एवं उत्तरदायित्व पर होंगे।
+
+कृपया इस नोटिस को अंतिम अवसर मानते हुए निर्धारित अवधि में भुगतान सुनिश्चित करें।
+        
+
+ भवदीय,
+
+${advName}
+अधिवक्ता
+नामांकन क्रमांक: ${enrollmentNo}
+
+
+नोटः इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख एवं भविष्य में आवश्यक वैधानिक/न्यायालयीन कार्यवाही हेतु सुरक्षित रखी गई है।`;  
+
+      
+  } else {
+    notice = `LEGAL NOTICE
+
+Date: ${noticeDateFormatted}
+
+FROM:
+
+Adv. ${advName}
+${advCourt}
+
+Mobile : ${advMobile}
+Email  : ${advEmail}
+Address: ${advAddress}
+
+UNDER INSTRUCTIONS FROM AND ON BEHALF OF MY CLIENT:
+
+Name           : ${client}
+S/o, D/o, W/o  : ${father}
+Address        : ${address}
+Mobile No.     : ${mobile}
+
+TO,
+
+Name           : ${opponent}
+S/o, D/o, W/o  : ${opponentFather}
+Address        : ${opponentAddress}
+Mobile No.     : ${opponentMobile}
+
+SUBJECT: Legal Notice for Recovery of Outstanding Amount of ₹${amount}/- along with Interest.
+
+Sir/Madam,
+
+Under instructions from and on behalf of my client, Mr./Ms. ${client}, I hereby issue and serve upon you the following Legal Notice for your information and necessary compliance:
+
+1. That you and my client are known to each other and shared cordial relations based on mutual trust, confidence and goodwill.
+2. That due to your urgent financial requirement, particularly for ${purpose}, you approached my client and requested financial assistance.
+3. That relying upon your assurances and representations, my client advanced a total sum of ₹${amount}/-, out of which ₹${cashAmount}/- was paid in cash and ₹${onlineAmount}/- was transferred through Banking/UPI channels.
+4. That at the time of receiving the aforesaid amount, you expressly assured my client that the entire amount would be repaid within the agreed period.
+5. That despite the expiry of the agreed period, the outstanding amount has not been repaid by you and remains due and payable.
+6. That my client repeatedly contacted you through personal meetings, telephone calls, messages and other means requesting repayment of the outstanding amount, but no actual payment has been made.
+7. That despite repeated demands and reminders, you have avoided payment on one pretext or another and have failed to honour your commitment.
+8. That your conduct amounts to breach of trust and has caused financial loss, inconvenience and mental harassment to my client.
+9. That my client is legally entitled to recover the principal amount of ₹${amount}/- along with interest at the rate of ${interestRate}% per annum from the date of advancement of the loan until actual realization.
+10. That due to your default, my client has been compelled to incur unnecessary expenses and suffer financial hardship, for which you shall also be liable.
+11. That if the aforesaid amount is not paid within the stipulated period, my client shall be constrained to initiate appropriate legal proceedings before the competent court for recovery of the principal amount, interest, litigation expenses, advocate's fees and all other consequential reliefs, entirely at your risk, cost and consequences.
+
+Therefore, through this Legal Notice, you are hereby called upon to pay the entire outstanding amount along with applicable interest within 15 (Fifteen) days from the date of receipt of this notice.
+Failing compliance, my client shall initiate appropriate legal proceedings, including a Money Recovery Suit, before the competent court without any further reference to you.
+
+Kindly treat this notice as a final opportunity and ensure payment within the stipulated period.
+
+Yours Faithfully,
+
+(${advName})
+Advocate
+Enrollment No.: ${enrollmentNo}
+
+Note: A copy of this Legal Notice has been retained in office records for future legal proceedings and reference.`;
+  }
+
+  document.getElementById("output").innerText = notice;
+  document.getElementById("output").style.display = "block";
+}
+  function downloadWord() {
+
+let content = document.getElementById("output").innerText;
+
+let blob = new Blob([content], {
+type: "application/msword"
+});
+
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download = "Money_Recovery_Notice.doc";
+
+link.click();
+URL.revokeObjectURL(link.href);
+}
+  function downloadPDF() {
+
+    let content = document.getElementById("output").innerText;
+
+    let printWindow = window.open("", "_blank");
+
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Money Recovery Notice</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 40px;
+                    line-height: 1.6;
+                    white-space: pre-wrap;
+                }
+            </style>
+        </head>
+        <body>${content}</body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+}
+</script>
+
+</body>
+</html>
 
