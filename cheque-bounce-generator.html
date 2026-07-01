@@ -220,7 +220,7 @@ let dishonourReason = document.getElementById("dishonourReason").value;
   if(language === "hindi"){
   notice = `
 
-वविधिक नोटिस
+विधिक नोटिस
 
 दिनांक: ${noticeDateFormatted}
 
@@ -293,11 +293,12 @@ ${advCourt}
 
 नोटः
 
-इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख, भविष्य में आवश्यक वैधानिक एवं न्यायालयीन कार्यवाही तथा साक्ष्य प्रयोजनार्थ सुरक्षित रखी गई है।
+इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख, भविष्य में आवश्यक वैधानिक एवं न्यायालयीन कार्यवाही तथा साक्ष्य प्रयोजनार्थ सुरक्षित रखी गई है। `;
 
       
   } else {
-    notice = `LEGAL NOTICE
+    notice = `
+      LEGAL NOTICE
 
 Date: ${noticeDateFormatted}
 From:
@@ -348,7 +349,7 @@ Yours faithfully,
 Advocate
 Enrollment No.: ${enrollmentNo}
 Note:
-A copy of this Legal Notice has been retained in our office records for future reference and for use in any statutory, judicial or other legal proceedings, if so required.
+A copy of this Legal Notice has been retained in our office records for future reference and for use in any statutory, judicial or other legal proceedings, if so required. `;
   }
 
   document.getElementById("output").innerText = notice;
