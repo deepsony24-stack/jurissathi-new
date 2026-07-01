@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheque Bounce Notice Draft | JurisSathi</title>
+
+<style>
+body{font-family:Arial,sans-serif;background:#0b1220;color:white;padding:20px}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+}
+
+button{
+    background:#ff9800;
+    color:white;
+    border:none;
+    padding:12px 20px;
+}
+
+#output{
+    display:none;
+    background:white;
+    color:black;
+    padding:20px;
+}
+
+.row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+    .row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.row input{
+    flex:1;
+}
+.field{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    font-weight:bold;
+    margin-bottom:2px;
+}
+
+.field small{
+    color:#ccc;
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.field input{
+    width:100%;
+    margin:0;
+}
+@media(max-width:768px){
+    .row{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1>Cheque Bounce Notice Draft</h1>
+<h3>Advocate Details</h3>
+
+<div class="row">
+    <input id="advName" placeholder="Advocate Name">
+    <input id="enrollmentNo" placeholder="Enrollment Number">
+</div>
+
+<div class="row">
+    <input id="advMobile" placeholder="Mobile Number">
+    <input id="advEmail" placeholder="Email Address">
+</div>
+
+<input id="advCourt" placeholder="Court Details">
+
+<input id="advAddress" placeholder="Office Address">
+<label>Output Language</label>
+<select id="language">
+<option value="hindi">Generate in Hindi</option>
+<option value="english">Generate in English</option>
+</select>
+<label>Notice Date</label>
+<input type="date" id="noticeDate">
+    <h3>Client Details</h3>
+   <div class="row">
+    <input id="clientName" placeholder="Client Name">
+    <input id="fatherName" placeholder="Father/Husband Name">
+</div>
+
+<div class="row">
+    <input id="mobile" placeholder="Mobile Number">
+    <input id="clientAddress" placeholder="Client Address">
+</div>
+ <h3>Cheque Details</h3>
+
+<div class="row">
+  <div class="field">
+    <label>Cheque Number</label>
+    <small>&nbsp;</small>
+    <input id="chequeNumber" placeholder="Cheque Number">
+  </div>
+
+  <div class="field">
+    <label>Cheque Date</label>
+    <small>Date Printed on Cheque</small>
+    <input type="date" id="chequeDate">
+  </div>
+</div>
+
+<div class="row">
+
+    <input id="chequeAmount" placeholder="Cheque Amount">
+
+    <input id="transactionReason" placeholder="Transaction Reason">
+
+</div>
+
+<div class="row">
+
+    <input id="bankName" placeholder="Bank Name">
+
+    <input id="branchName" placeholder="Branch Name">
+
+</div>
+
+<div class="row">
+
+    <div style="flex:1;">
+        <label>Presentation Date</label>
+        <small style="display:block;color:#ccc;">Date Cheque Deposited in Bank</small>
+        <input type="date" id="presentationDate">
+    </div>
+
+    <div style="flex:1;">
+        <label>Return Memo Date</label>
+        <small style="display:block;color:#ccc;">Date on Bank Return Memo</small>
+        <input type="date" id="returnMemoDate">
+    </div>
+
+</div>
+
+<input id="dishonourReason" placeholder="Dishonour Reason">
+
+<h3>Opponent Details</h3>
+
+<div class="row">
+    <input id="opponentName" placeholder="Opponent Name">
+    <input id="opponentFather" placeholder="Father / Husband Name">
+</div>
+
+<div class="row">
+    <input id="opponentMobile" placeholder="Opponent Mobile">
+    <input id="opponentAddress" placeholder="Opponent Address">
+</div>
+<button onclick="generateNotice()">Generate Notice</button>
+  <button onclick="downloadWord()">Download Word</button>
+
+<button onclick="downloadPDF()">Download PDF</button>
+
+<div id="output"></div>
+
+<script>
+function generateNotice(){
+  let language = document.getElementById("language").value;
+  let noticeDate = document.getElementById("noticeDate").value;
+let noticeDateFormatted = new Date(noticeDate).toLocaleDateString('en-GB');
+   let advName = document.getElementById("advName").value;
+let enrollmentNo = document.getElementById("enrollmentNo").value;
+let advCourt = document.getElementById("advCourt").value;
+let advMobile = document.getElementById("advMobile").value;
+let advEmail = document.getElementById("advEmail").value;
+let advAddress = document.getElementById("advAddress").value; 
+  let client = document.getElementById("clientName").value;
+  let father = document.getElementById("fatherName").value;
+  let address = document.getElementById("clientAddress").value;
+  let mobile = document.getElementById("mobile").value;
+  let opponent = document.getElementById("opponentName").value;
+ let opponentFather = document.getElementById("opponentFather").value;
+let opponentMobile = document.getElementById("opponentMobile").value;
+let opponentAddress = document.getElementById("opponentAddress").value;
+let chequeNumber = document.getElementById("chequeNumber").value;
+
+let chequeDate = document.getElementById("chequeDate").value;
+let chequeDateFormatted = new Date(chequeDate).toLocaleDateString("en-GB");
+
+let chequeAmount = document.getElementById("chequeAmount").value;
+
+let transactionReason = document.getElementById("transactionReason").value;
+
+let bankName = document.getElementById("bankName").value;
+let branchName = document.getElementById("branchName").value;
+
+let presentationDate = document.getElementById("presentationDate").value;
+let presentationDateFormatted = new Date(presentationDate).toLocaleDateString("en-GB");
+
+let returnMemoDate = document.getElementById("returnMemoDate").value;
+let returnMemoDateFormatted = new Date(returnMemoDate).toLocaleDateString("en-GB");
+
+let dishonourReason = document.getElementById("dishonourReason").value;
+  let notice = "";
+
+  if(language === "hindi"){
+ notice = `
+<div style="text-align:center;">
+<h2>विधिक नोटिस</h2>
+</div>
+
+दिनांक: ${noticeDateFormatted}
+
+प्रेषक:
+
+अधिवक्ता ${advName}
+${advCourt}
+
+मोबाइल : ${advMobile}
+ईमेल : ${advEmail}
+पता : ${advAddress}
+
+मेरे मुवक्किल की ओर से:
+
+नाम : ${client}
+पिता/पति का नाम : ${father}
+पता : ${address}
+मोबाइल नं. : ${mobile}
+
+प्रति,
+
+नाम : ${opponent}
+पिता/पति का नाम : ${opponentFather}
+पता : ${opponentAddress}
+मोबाइल नं. : ${opponentMobile}
+
+विषय:
+
+परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत चेक अनादरण (Cheque Dishonour) के संबंध में विधिक नोटिस।
+
+महोदय/महोदया,
+
+मेरे मुवक्किल के स्पष्ट निर्देशों एवं अधिकार के आधार पर आपको यह विधिक नोटिस प्रेषित किया जा रहा है, जिससे आपको आपके द्वारा उत्पन्न विधिक दायित्वों एवं उनके उल्लंघन के परिणामों से विधिवत अवगत कराया जा सके।
+
+1. कि आपके एवं मेरे मुवक्किल के मध्य ${transactionReason} के संबंध में एक वैध, विधिसम्मत एवं विधिक रूप से प्रवर्तनीय वित्तीय देयता (Legally Enforceable Debt or Liability) विद्यमान थी, जिसका निर्वहन करना आपका वैधानिक दायित्व था।
+2. कि उक्त वैध देयता के निर्वहन एवं भुगतान के उद्देश्य से आपने मेरे मुवक्किल के पक्ष में ₹${chequeAmount}/- (रुपये ${chequeAmount} मात्र) का चेक क्रमांक ${chequeNumber}, दिनांक ${chequeDateFormatted}, बैंक ${bankName}, शाखा ${branchName} से जारी किया।
+3. कि उपर्युक्त चेक आपने पूर्णतः स्वेच्छा, स्वतंत्र इच्छा एवं बिना किसी दबाव, अनुचित प्रभाव, प्रलोभन अथवा भ्रम के मेरे मुवक्किल को जारी किया था, जिससे आपके द्वारा उक्त वित्तीय देयता को स्वीकार किया जाना स्पष्ट रूप से सिद्ध होता है।
+4. कि मेरे मुवक्किल ने उक्त चेक को उसकी वैधानिक वैधता अवधि के भीतर, सद्भावना एवं विधि के अनुरूप दिनांक ${presentationDateFormatted} को अपने बैंक के माध्यम से भुगतान हेतु प्रस्तुत किया।
+5. कि उक्त चेक बैंक द्वारा दिनांक ${returnMemoDateFormatted} को "${dishonourReason}" कारण अंकित करते हुए अनादृत (Dishonoured) कर वापस कर दिया गया, जिसकी सूचना बैंक द्वारा जारी Return Memo के माध्यम से मेरे मुवक्किल को प्राप्त हुई।
+6. कि बैंक द्वारा जारी उक्त Return Memo चेक अनादरण का प्रथमदृष्टया वैधानिक साक्ष्य है तथा यह स्पष्ट रूप से प्रदर्शित करता है कि आप अपने वैधानिक एवं वित्तीय दायित्वों का निर्वहन करने में विफल रहे हैं।
+7. कि आपके द्वारा ऐसा चेक जारी किया जाना, जिसका भुगतान प्रस्तुत किए जाने पर संभव नहीं हो सका, आपके वैधानिक दायित्वों के गंभीर उल्लंघन को दर्शाता है तथा इससे मेरे मुवक्किल को आर्थिक हानि, मानसिक पीड़ा एवं अनावश्यक असुविधा का सामना करना पड़ा है।
+8. कि चेक के अनादरण की सूचना प्राप्त होने के उपरांत भी मेरे मुवक्किल ने आपको अनेक अवसरों पर व्यक्तिगत रूप से, दूरभाष, संदेश तथा अन्य उपलब्ध माध्यमों से बकाया राशि का भुगतान करने हेतु अनुरोध किया, तथापि आपने न तो भुगतान किया और न ही कोई संतोषजनक उत्तर अथवा स्पष्टीकरण प्रस्तुत किया।
+9. कि आपके उक्त आचरण से यह स्पष्ट रूप से सिद्ध होता है कि आपने अपने वैधानिक एवं संविदात्मक दायित्वों का जानबूझकर उल्लंघन किया है, जिसके परिणामस्वरूप मेरे मुवक्किल को आर्थिक हानि, मानसिक प्रताड़ना, समय की क्षति तथा अनावश्यक विधिक व्यय वहन करना पड़ रहा है।
+10. कि आपके द्वारा जारी किया गया उपर्युक्त चेक मेरे मुवक्किल के पक्ष में विद्यमान वैध एवं विधिक रूप से प्रवर्तनीय ऋण/देयता (Legally Enforceable Debt or Liability) के भुगतान हेतु जारी किया गया था। अतः उक्त चेक का अनादरण परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत दंडनीय अपराध की श्रेणी में आता है।
+11. कि यह विधिक नोटिस परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के प्रावधानों के अनुपालन में आपको विधिवत प्रेषित किया जा रहा है तथा आपको अंतिम एवं पर्याप्त अवसर प्रदान किया जाता है कि आप इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस की वैधानिक अवधि के भीतर ₹${chequeAmount}/- (रुपये __________ मात्र) की संपूर्ण राशि मेरे मुवक्किल को अदा करें।
+12. कि यदि आप उपर्युक्त वैधानिक अवधि के भीतर भुगतान करने में विफल रहते हैं, तो मेरे मुवक्किल के पक्ष में आपके विरुद्ध परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत सक्षम न्यायालय में आपराधिक परिवाद (Criminal Complaint) प्रस्तुत करने का विधिक कारण (Cause of Action) उत्पन्न हो जाएगा।
+13. कि उपर्युक्त आपराधिक कार्यवाही के अतिरिक्त मेरे मुवक्किल आपके विरुद्ध मूल राशि की वसूली, विधि एवं तथ्यों के अनुसार देय ब्याज, हर्जाना (Damages), वाद व्यय, अधिवक्ता शुल्क तथा अन्य उपलब्ध दीवानी एवं वैधानिक राहतों की प्राप्ति हेतु पृथक विधिक कार्यवाही प्रारंभ करने का अधिकार सुरक्षित रखते हैं।
+14. कि ऐसी समस्त विधिक कार्यवाही सक्षम अधिकारिता (Competent Jurisdiction) वाले न्यायालय के समक्ष प्रारंभ की जाएगी तथा उससे उत्पन्न होने वाले समस्त न्यायालयीन व्यय, अधिवक्ता शुल्क, न्यायालय शुल्क एवं अन्य विधिक परिणामों के लिए आप स्वयं पूर्णतः उत्तरदायी होंगे।
+15. कि आपको इस विधिक नोटिस के माध्यम से अंतिम अवसर प्रदान किया जाता है कि आप इस नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर ₹${chequeAmount}/- (रुपये __________ मात्र) की संपूर्ण राशि मेरे मुवक्किल को अदा कर अपने वैधानिक दायित्व का निर्वहन करें तथा भविष्य में किसी भी प्रकार के अनावश्यक विधिक विवाद से बचें।
+16. कि यदि आप उक्त वैधानिक अवधि के भीतर भुगतान करने में असफल रहते हैं, तो मेरे मुवक्किल आपके विरुद्ध परक्राम्य लिखत अधिनियम, 1881 की धारा 138 के अंतर्गत सक्षम न्यायालय में आपराधिक परिवाद प्रस्तुत करने के अतिरिक्त अन्य सभी उपलब्ध विधिक उपचार अपनाने के लिए स्वतंत्र एवं बाध्य होंगे।
+17. कि ऐसी स्थिति में मेरे मुवक्किल आपके विरुद्ध मूल राशि, ब्याज (यदि विधि एवं तथ्यों के अनुसार देय हो), हर्जाना (Damages), मेस्ने लाभ (जहाँ लागू हो), वाद व्यय, अधिवक्ता शुल्क तथा अन्य समस्त विधिक व्ययों की वसूली हेतु पृथक दीवानी कार्यवाही प्रारंभ करने का अधिकार भी सुरक्षित रखते हैं।
+18. कि आपके द्वारा भुगतान न किए जाने की स्थिति में प्रारंभ की जाने वाली समस्त आपराधिक एवं दीवानी कार्यवाहियों से उत्पन्न होने वाले सभी परिणाम, न्यायालयीन व्यय, अधिवक्ता शुल्क, न्यायालय शुल्क एवं अन्य दायित्वों के लिए आप स्वयं पूर्णतः उत्तरदायी होंगे।
+19. कि इस विधिक नोटिस को आपको अंतिम एवं पर्याप्त अवसर प्रदान करने के उद्देश्य से प्रेषित किया जा रहा है। यदि आप इस अवसर का लाभ नहीं उठाते हैं, तो यह माना जाएगा कि आपने अपने विधिक दायित्वों का स्वेच्छा से पालन करने से इंकार कर दिया है।
+20. अतः आपको अंतिम रूप से निर्देशित एवं अपेक्षित किया जाता है कि आप इस विधिक नोटिस की प्राप्ति से 15 (पंद्रह) दिवस के भीतर ₹${chequeAmount}/- (रुपये __________ मात्र) की संपूर्ण राशि मेरे मुवक्किल को अदा करें। अन्यथा मेरे मुवक्किल आपके विरुद्ध बिना किसी अन्य सूचना अथवा पत्राचार के परक्राम्य लिखत अधिनियम, 1881 की धारा 138 तथा अन्य लागू विधिक प्रावधानों के अंतर्गत सक्षम न्यायालय में उपयुक्त आपराधिक एवं दीवानी कार्यवाही प्रारंभ करेंगे, जिसकी समस्त जिम्मेदारी, व्यय एवं परिणाम आपके स्वयं के जोखिम, उत्तरदायित्व एवं दायित्व पर होंगे।
+
+
+<div style="text-align:right; margin-top:40px;">
+भवदीय,<br><br><br>
+${advName}<br>
+अधिवक्ता<br>
+पंजीयन क्रमांक: ${enrollmentNo}
+</div>
+
+नोटः
+
+इस विधिक नोटिस की एक प्रति कार्यालय अभिलेख, भविष्य में आवश्यक वैधानिक एवं न्यायालयीन कार्यवाही तथा साक्ष्य प्रयोजनार्थ सुरक्षित रखी गई है। `;
+
+      
+  } else {
+   notice = `
+<div style="text-align:center;">
+<h2>LEGAL NOTICE</h2>
+</div>
+
+Date: ${noticeDateFormatted}
+From:
+Advocate ${advName}
+${advCourt}
+Mobile: ${advMobile}
+Email: ${advEmail}
+Address: ${advAddress}
+On behalf of my Client:
+Name: ${client}
+Father's/Husband's Name: ${father}
+Address: ${address}
+Mobile No.: ${mobile}
+To,
+Name: ${opponent}
+Father's/Husband's Name: ${opponentFather}
+Address: ${opponentAddress}
+Mobile No.: ${opponentMobile}
+Subject:
+Legal Notice under Section 138 of the Negotiable Instruments Act, 1881 in respect of Dishonour of Cheque.
+Sir/Madam,
+Under the express instructions and authority of my client, I hereby issue and serve upon you the following Legal Notice in order to formally notify you of your legal obligations and the consequences arising out of your failure to discharge the same:
+
+1. That a valid, lawful and legally enforceable debt or liability existed between you and my client in respect of ${transactionReason}, the discharge of which was your legal obligation.
+2. That towards the discharge of the aforesaid legally enforceable debt or other liability, you issued in favour of my client Cheque No. ${chequeNumber}, dated ${chequeDateFormatted}, drawn on ${bankName}, ${branchName}, for a sum of ₹${chequeAmount}/- (Rupees ${chequeAmount} Only).
+3. That the aforesaid cheque was issued by you voluntarily, out of your free will and without any coercion, undue influence, inducement or misrepresentation, thereby unequivocally acknowledging your financial liability towards my client.
+4. That my client, acting in good faith and strictly in accordance with law, presented the aforesaid cheque through his banker within its statutory period of validity on ${presentationDateFormatted} for encashment.
+5. That the said cheque was returned unpaid by your banker on ${returnMemoDateFormatted} with the endorsement "${dishonourReason}", as evidenced by the Bank Return Memo duly issued in respect thereof.
+6. That the said Bank Return Memo constitutes prima facie documentary evidence of the dishonour of the cheque and clearly establishes your failure to discharge your legal and financial obligations.
+7. That the issuance of a cheque by you which could not be honoured upon presentation amounts to a serious breach of your legal obligations and has caused substantial financial loss, mental agony and unnecessary inconvenience to my client.
+8. That even after receiving information regarding the dishonour of the cheque, my client, on several occasions, personally as well as through telephone calls, messages and other available modes of communication, requested you to make payment of the outstanding amount. However, you neither made the payment nor furnished any satisfactory explanation in respect thereof.
+9. That your aforesaid conduct clearly establishes that you have deliberately failed to discharge your statutory and contractual obligations, thereby causing financial loss, mental harassment, loss of valuable time and unnecessary legal expenses to my client.
+10. That the aforesaid cheque was issued by you towards the discharge of a valid and legally enforceable debt or liability owed to my client. Consequently, the dishonour of the said cheque squarely attracts the penal provisions of Section 138 of the Negotiable Instruments Act, 1881.
+11. That this Legal Notice is being duly issued to you in strict compliance with the provisions of Section 138 of the Negotiable Instruments Act, 1881, thereby granting you a final and sufficient opportunity to pay the entire cheque amount of ₹${chequeAmount}/- (Rupees ${chequeAmount} Only) to my client within 15 (Fifteen) days from the date of receipt of this Legal Notice.
+12. That in the event of your failure to make the aforesaid payment within the prescribed statutory period, a valid Cause of Action shall accrue in favour of my client to initiate criminal proceedings against you before the competent court under Section 138 of the Negotiable Instruments Act, 1881.
+13. That apart from the aforesaid criminal proceedings, my client expressly reserves the right to initiate appropriate civil proceedings against you for recovery of the principal amount, interest (where legally and factually payable), damages, litigation expenses, advocate's fees and all other civil and statutory reliefs available under law.
+14. That all such legal proceedings shall be instituted before the court having Competent Jurisdiction, and you alone shall be solely responsible and liable for all court fees, litigation costs, advocate's fees and every legal consequence arising therefrom.
+15. That by way of this Legal Notice, you are hereby granted a final opportunity to discharge your legal obligation by making payment of the entire cheque amount of ₹${chequeAmount}/- (Rupees ${chequeAmount} Only) to my client within 15 (Fifteen) days from the date of receipt of this Legal Notice, thereby avoiding unnecessary legal disputes and litigation.
+16. That in the event of your failure to make the aforesaid payment within the prescribed statutory period, my client shall be free and legally entitled to initiate criminal proceedings against you under Section 138 of the Negotiable Instruments Act, 1881, in addition to availing all other remedies available under the applicable laws.
+17. That in such an event, my client shall also be entitled to institute separate civil proceedings against you for recovery of the principal amount, interest (where legally and factually payable), damages, litigation expenses, advocate's fees and all other consequential legal costs and reliefs available under law.
+18. That you alone shall be solely responsible and liable for all consequences arising out of such criminal and civil proceedings, including court fees, litigation expenses, advocate's fees, legal costs and every other liability incidental thereto.
+19. That this Legal Notice is being issued to provide you with a final and sufficient opportunity to comply with your legal obligations. In the event you fail to avail yourself of this opportunity, it shall be presumed that you have willfully refused to discharge your legally enforceable liability.
+20. Therefore, you are hereby finally called upon and required to pay the entire cheque amount of ₹${chequeAmount}/- (Rupees ${chequeAmount} Only) to my client within 15 (Fifteen) days from the date of receipt of this Legal Notice. Failing which, my client shall be constrained to initiate appropriate criminal proceedings under Section 138 of the Negotiable Instruments Act, 1881, along with such other civil and legal proceedings as may be available under law, before the Competent Court, entirely at your own risk, costs, consequences and liabilities, without any further notice or correspondence.
+
+This Legal Notice is issued without prejudice to all other legal rights, claims and remedies available to my client under the applicable laws, all of which are hereby expressly reserved.
+<div style="text-align:right; margin-top:40px;">
+Yours Faithfully,<br><br><br>
+
+(${advName})<br>
+Advocate<br>
+Enrollment No.: ${enrollmentNo}
+</div>
+Note:
+A copy of this Legal Notice has been retained in our office records for future reference and for use in any statutory, judicial or other legal proceedings, if so required. `;
+  }
+
+ document.getElementById("output").innerHTML =
+notice.replace(/\n/g, "<br>");
+  document.getElementById("output").style.display = "block";
+}
+  function downloadWord() {
+
+    let content = document.getElementById("output").innerHTML;
+
+    let wordContent = `
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <style>
+    body{
+        font-family:"Times New Roman",serif;
+        font-size:11pt;
+        line-height:1.7;
+        margin:40px;
+    }
+    h2{
+        text-align:center;
+    }
+    </style>
+    </head>
+    <body>
+    ${content}
+    </body>
+    </html>
+    `;
+
+    let blob = new Blob([wordContent], {
+        type: "application/msword;charset=utf-8"
+    });
+
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Cheque_Bounce_Notice.doc";
+    link.click();
+    URL.revokeObjectURL(link.href);
+
+}
+  function downloadPDF() {
+
+   let content = document.getElementById("output").innerHTML;
+
+    let printWindow = window.open("", "_blank");
+
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Money Recovery Notice</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 40px;
+                    line-height: 1.6;
+                    white-space: pre-wrap;
+                }
+            </style>
+        </head>
+        <body>${content}</body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+}
+</script>
+
+</body>
+</html>
+
