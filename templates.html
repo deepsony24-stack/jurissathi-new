@@ -110,8 +110,7 @@ Ready-to-use professional legal drafts generated from your details.
 
     <p class="price">₹199</p>
 
-<a href="javascript:void(0)" class="btn" onclick="payAndUnlock('cheque-bounce',199,'cheque-bounce-generator.html')">🔓 Unlock Draft</a>
-
+<a href="javascript:void(0)" class="btn" onclick="sendOTP()">🔓 Unlock Draft</a>
     <p class="disclaimer">
         यह केवल सामान्य कानूनी प्रारूप है। प्रत्येक मामले के तथ्य अलग हो सकते हैं।<br>
         अंतिम उपयोग से पहले अधिवक्ता से सलाह लेना उचित है।
@@ -146,6 +145,55 @@ function payAndUnlock(draftId, amount, redirectPage) {
     var rzp = new Razorpay(options);
     rzp.open();
 }
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
+  authDomain: "jurissathi.firebaseapp.com",
+  projectId: "jurissathi",
+  storageBucket: "jurissathi.firebasestorage.app",
+  messagingSenderId: "529261201285",
+  appId: "1:529261201285:web:529bd38c0ae95654d6e6ec"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+let confirmationResult;
+let userMobile = "";
+
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+    size: "invisible"
+});
+
+function sendOTP() {
+    userMobile = prompt("Enter Mobile Number (10 digits):");
+
+    if (!userMobile || userMobile.length != 10) {
+        alert("Enter valid mobile number");
+        return;
+    }
+
+    auth.signInWithPhoneNumber("+91" + userMobile, window.recaptchaVerifier)
+        .then(function(result) {
+            confirmationResult = result;
+
+            let otp = prompt("Enter OTP");
+
+            return confirmationResult.confirm(otp);
+        })
+        .then(function() {
+            alert("OTP Verified Successfully");
+        })
+        .catch(function(error) {
+            alert(error.message);
+        });
+}    
 </script>
+  <div id="recaptcha-container"></div>  
 </body>
 </html>
