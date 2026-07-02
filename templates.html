@@ -69,104 +69,55 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const db = firebase.firestore();
 
-let currentDraftId = "";
-let currentAmount = 0;
-let currentRedirectPage = "";
-let verifiedMobile = "";
+function payAndUnlock(draftId, amount, redirectPage) {
+  var options = {
+    key: "rzp_live_T8LI6UgK5YdOFP",
+    amount: amount * 100,
+    currency: "INR",
+    name: "JurisSathi",
+    description: draftId + " Draft Access",
+    handler: function (response) {
+      alert("Payment Successful. Draft unlocked.");
+      window.location.href = redirectPage;
+    },
+    theme: { color: "#ff9800" }
+  };
 
-function startUnlock(draftId, amount, redirectPage){
-  currentDraftId = draftId;
-  currentAmount = amount;
-  currentRedirectPage = redirectPage;
+  var rzp = new Razorpay(options);
+  rzp.open();
+}
 
-  let mobile = prompt("Enter 10 digit mobile number:");
+function sendOTP(draftId, amount, redirectPage) {
+  let mobile = prompt("Enter Mobile Number 10 digits:");
 
-  if(!mobile || mobile.length !== 10){
-    alert("Please enter valid 10 digit mobile number.");
+  if (!mobile || mobile.length !== 10) {
+    alert("Enter valid 10 digit mobile number");
     return;
   }
 
-  verifiedMobile = mobile;
-  sendOTP("+91" + mobile);
-}
-
-function sendOTP(phoneNumber){
-  if(!window.recaptchaVerifier){
+  if (!window.recaptchaVerifier) {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
       size: "invisible"
     });
   }
 
-  auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
-  .then(function(confirmationResult){
-    let otp = prompt("Enter OTP:");
-    return confirmationResult.confirm(otp);
-  })
-  .then(function(){
-    checkAccessOrPay();
-  })
-  .catch(function(error){
-    alert("OTP Error: " + error.message);
-  });
-}
-
-async function checkAccessOrPay(){
-  let docId = verifiedMobile + "_" + currentDraftId;
-  let docRef = db.collection("purchases").doc(docId);
-  let docSnap = await docRef.get();
-
-  if(docSnap.exists){
-    let data = docSnap.data();
-    let today = new Date();
-    let expiryDate = data.expiryDate.toDate();
-
-    if(data.paid === true && expiryDate > today){
-      alert("Access valid. Opening draft.");
-      window.location.href = currentRedirectPage;
-      return;
-    }
-  }
-
-  payAndUnlock(currentDraftId, currentAmount, currentRedirectPage);
-}
-
-function payAndUnlock(draftId, amount, redirectPage){
-  let options = {
-    key: "rzp_live_T8LI6UgK5YdOFP",
-    amount: amount * 100,
-    currency: "INR",
-    name: "JurisSathi",
-    description: draftId + " Draft Access - 1 Year",
-    handler: async function(response){
-      let today = new Date();
-      let expiry = new Date();
-      expiry.setDate(today.getDate() + 365);
-
-      let docId = verifiedMobile + "_" + draftId;
-
-      await db.collection("purchases").doc(docId).set({
-        mobile: verifiedMobile,
-        draftId: draftId,
-        amount: amount,
-        paid: true,
-        paymentId: response.razorpay_payment_id,
-        purchaseDate: firebase.firestore.Timestamp.fromDate(today),
-        expiryDate: firebase.firestore.Timestamp.fromDate(expiry),
-        status: "active"
-      });
-
-      alert("Payment successful. Draft unlocked for 1 year.");
-      window.location.href = redirectPage;
-    },
-    theme:{color:"#ff9800"}
-  };
-
-  let rzp = new Razorpay(options);
-  rzp.open();
+  auth.signInWithPhoneNumber("+91" + mobile, window.recaptchaVerifier)
+    .then(function (confirmationResult) {
+      let otp = prompt("Enter OTP:");
+      return confirmationResult.confirm(otp);
+    })
+    .then(function () {
+      alert("OTP Verified Successfully");
+      payAndUnlock(draftId, amount, redirectPage);
+    })
+    .catch(function (error) {
+      alert("OTP Error: " + error.message);
+    });
 }
 </script>
 
+<div id="recaptcha-container"></div>
+   
 </body>
 </html>
