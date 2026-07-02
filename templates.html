@@ -198,5 +198,11 @@ function payAndUnlock(draftId, amount, redirectPage) {
 }
 </script>
   <div id="recaptcha-container"></div>  
+    <script>
+function sendOTP(draftId, amount, redirectPage) {
+    alert("OTP अभी test mode में है. Payment opening...");
+    payAndUnlock(draftId, amount, redirectPage);
+}
+</script>
 </body>
 </html>
