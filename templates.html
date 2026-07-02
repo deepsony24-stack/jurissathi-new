@@ -172,6 +172,28 @@ function sendOTP(draftId, amount, redirectPage) {
             alert(error.message);
         });
 }    
+<script>
+function payAndUnlock(draftId, amount, redirectPage) {
+
+    console.log(typeof Razorpay);
+    var options = {
+        key: "rzp_live_T8LI6UgK5YdOFP",
+        amount: amount * 100,
+        currency: "INR",
+        name: "JurisSathi",
+        description: draftId + " Draft Access",
+        handler: function (response) {
+            alert("Payment Successful. Draft unlocked.");
+            window.location.href = redirectPage;
+        },
+        theme: {
+            color: "#ff9800"
+        }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+}
 </script>
   <div id="recaptcha-container"></div>  
 </body>
