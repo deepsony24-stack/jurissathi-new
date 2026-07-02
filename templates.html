@@ -129,7 +129,8 @@ Ready-to-use professional legal drafts generated from your details.
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>    
+
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
   authDomain: "jurissathi.firebaseapp.com",
@@ -140,66 +141,56 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
-const db = firebase.firestore();
-let confirmationResult;
-let userMobile = "";
 
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
-    size: "invisible"
-});
+function payAndUnlock(draftId, amount, redirectPage) {
+  var options = {
+    key: "rzp_live_T8LI6UgK5YdOFP",
+    amount: amount * 100,
+    currency: "INR",
+    name: "JurisSathi",
+    description: draftId + " Draft Access",
+    handler: function (response) {
+      alert("Payment Successful. Draft unlocked.");
+      window.location.href = redirectPage;
+    },
+    theme: { color: "#ff9800" }
+  };
+
+  var rzp = new Razorpay(options);
+  rzp.open();
+}
 
 function sendOTP(draftId, amount, redirectPage) {
-    userMobile = prompt("Enter Mobile Number (10 digits):");
+  let mobile = prompt("Enter Mobile Number 10 digits:");
 
-    if (!userMobile || userMobile.length != 10) {
-        alert("Enter valid mobile number");
-        return;
-    }
+  if (!mobile || mobile.length !== 10) {
+    alert("Enter valid 10 digit mobile number");
+    return;
+  }
 
-    auth.signInWithPhoneNumber("+91" + userMobile, window.recaptchaVerifier)
-        .then(function(result) {
-            confirmationResult = result;
+  if (!window.recaptchaVerifier) {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+      size: "invisible"
+    });
+  }
 
-            let otp = prompt("Enter OTP");
-
-            return confirmationResult.confirm(otp);
-        })
-        .then(function() {
-    alert("OTP Verified Successfully");
-    payAndUnlock(draftId, amount, redirectPage);
-})
-        .catch(function(error) {
-            alert(error.message);
-        });
-}    
-</script>
-
-<script>
-function payAndUnlock(draftId, amount, redirectPage) {
-
-    console.log(typeof Razorpay);
-    var options = {
-        key: "rzp_live_T8LI6UgK5YdOFP",
-        amount: amount * 100,
-        currency: "INR",
-        name: "JurisSathi",
-        description: draftId + " Draft Access",
-        handler: function (response) {
-            alert("Payment Successful. Draft unlocked.");
-            window.location.href = redirectPage;
-        },
-        theme: {
-            color: "#ff9800"
-        }
-    };
-
-    var rzp = new Razorpay(options);
-    rzp.open();
+  auth.signInWithPhoneNumber("+91" + mobile, window.recaptchaVerifier)
+    .then(function (confirmationResult) {
+      let otp = prompt("Enter OTP:");
+      return confirmationResult.confirm(otp);
+    })
+    .then(function () {
+      alert("OTP Verified Successfully");
+      payAndUnlock(draftId, amount, redirectPage);
+    })
+    .catch(function (error) {
+      alert("OTP Error: " + error.message);
+    });
 }
 </script>
-  <div id="recaptcha-container"></div>  
+
+<div id="recaptcha-container"></div>
    
 </body>
 </html>
