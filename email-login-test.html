@@ -58,10 +58,19 @@ if (auth.isSignInWithEmailLink(window.location.href)) {
 
   auth.signInWithEmailLink(email, window.location.href)
     .then((result) => {
-   localStorage.removeItem("emailForSignIn");
-document.getElementById("status").innerHTML =
-  "✅ Login Successful";
-console.log(result.user);
+    localStorage.removeItem("emailForSignIn");
+document.getElementById("status").innerHTML = "✅ Login Successful";
+
+const params = new URLSearchParams(window.location.search);
+const draft = params.get("draft");
+const amount = params.get("amount");
+const redirect = params.get("redirect");
+
+if (draft && amount && redirect) {
+  window.location.href = "templates.html?login=success&draft=" + draft + "&amount=" + amount + "&redirect=" + redirect;
+} else {
+  window.location.href = "templates.html";
+}
     })
     .catch((error) => {
       document.getElementById("status").innerHTML =
