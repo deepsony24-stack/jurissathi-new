@@ -180,6 +180,15 @@ function payAndUnlock(draftId, amount, redirectPage){
   let rzp = new Razorpay(options);
   rzp.open();
 }
+const urlParams = new URLSearchParams(window.location.search);
+
+if (urlParams.get("login") === "success") {
+  currentDraftId = urlParams.get("draft");
+  currentAmount = Number(urlParams.get("amount"));
+  currentRedirectPage = urlParams.get("redirect");
+
+  payAndUnlock(currentDraftId, currentAmount, currentRedirectPage);
+}  
 </script>
 
 </body>
