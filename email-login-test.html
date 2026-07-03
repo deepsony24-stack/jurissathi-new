@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JurisSathi Gmail Login</title>
+</head>
+<body>
+
+<h2>Login with Gmail OTP</h2>
+
+<input type="email" id="email" placeholder="Enter Gmail">
+<br><br>
+
+<button id="sendBtn">Send OTP</button>
+
+<div id="status"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
+  authDomain: "jurissathi.firebaseapp.com",
+  projectId: "jurissathi",
+  storageBucket: "jurissathi.firebasestorage.app",
+  messagingSenderId: "529261201285",
+  appId: "1:529261201285:web:529bd38c0ae95654d6e6ec"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+document.getElementById("sendBtn").onclick = async () => {
+  const email = document.getElementById("email").value;
+
+  const actionCodeSettings = {
+    url: "https://jurissathi.com/email-login-test.html",
+    handleCodeInApp: true
+  };
+
+  await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+
+  localStorage.setItem("emailForSignIn", email);
+
+  document.getElementById("status").innerHTML =
+    "Login link sent to your Gmail.";
+};
+</script>
+
+</body>
+</html>
