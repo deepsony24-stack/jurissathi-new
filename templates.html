@@ -42,7 +42,7 @@ body{font-family:Arial,sans-serif;background:#0b1220;color:white;margin:0;paddin
 <h2>Cheque Bounce Notice Draft</h2>
 <p>Professional Advocate Format • Editable Draft • Instant Access</p>
 <p class="price">₹199 • 1 Year Access</p>
-<a href="email-login-test.html" class="btn">🔓 Unlock Draft</a>
+<a href="email-login-test.html?draft=cheque-bounce&amount=199&redirect=cheque-bounce-generator.html" class="btn">🔓 Unlock Draft</a>
 <p class="disclaimer">Payment के बाद यह Draft उसी mobile number पर 1 साल तक unlock रहेगा।</p>
 </div>
 
@@ -180,6 +180,15 @@ function payAndUnlock(draftId, amount, redirectPage){
   let rzp = new Razorpay(options);
   rzp.open();
 }
+const urlParams = new URLSearchParams(window.location.search);
+
+if (urlParams.get("login") === "success") {
+  currentDraftId = urlParams.get("draft");
+  currentAmount = Number(urlParams.get("amount"));
+  currentRedirectPage = urlParams.get("redirect");
+
+  payAndUnlock(currentDraftId, currentAmount, currentRedirectPage);
+}  
 </script>
 
 </body>
