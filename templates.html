@@ -148,7 +148,11 @@ function payAndUnlock(draftId, amount, redirectPage){
       const today=new Date(); const expiry=new Date(); expiry.setDate(today.getDate()+365);
       const docId=currentUser.uid+'_'+draftId;
       await db.collection('purchases').doc(docId).set({uid:currentUser.uid,email:currentUser.email,draftId,amount,paid:true,paymentId:response.razorpay_payment_id,purchaseDate:firebase.firestore.Timestamp.fromDate(today),expiryDate:firebase.firestore.Timestamp.fromDate(expiry),status:'active'});
-      alert('Payment successful. Draft unlocked for 1 year.'); window.location.href=redirectPage;
+     alert("Payment successful. Draft unlocked for 1 year.");
+
+setTimeout(function () {
+    window.location.href = redirectPage;
+}, 500);
     },
     theme:{color:'#ff9800'}
   };
