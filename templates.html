@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Drafts | JurisSathi</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#0b1220;color:#fff;margin:0;padding:20px}
+.container{max-width:1200px;margin:auto}
+h1{margin-bottom:8px}.intro{color:#cbd5e1;font-size:16px;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#1a2238;padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,.08)}
+.card h2{margin-top:0}.price{color:#ffc107;font-size:22px;font-weight:bold}.btn{display:inline-block;background:#ffc107;color:#000;padding:11px 20px;border:0;text-decoration:none;border-radius:8px;font-weight:bold;cursor:pointer}.disclaimer{font-size:14px;color:#ccc;margin-top:15px;line-height:1.5}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:18px;z-index:9999}
+.modal-box{width:100%;max-width:430px;background:#111a2e;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.modal-box h2{margin-top:0}.field{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #334155;background:#0b1220;color:#fff}.row{display:flex;gap:10px;flex-wrap:wrap}.row .field{flex:1;min-width:160px}.modal-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}.secondary{background:#334155;color:#fff}.linkbtn{background:transparent;color:#ffc107;border:0;cursor:pointer;padding:10px 0;font-weight:bold}.small{font-size:13px;color:#cbd5e1;line-height:1.5}.status{margin-top:10px;color:#ffc107;font-size:14px}.close{float:right;background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📄 JurisSathi Legal Drafts</h1>
+<p class="intro">Ready-to-use professional legal drafts generated from your details.</p>
+<div class="grid">
+<div class="card">
+<h2>Money Recovery Legal Notice Draft</h2>
+<p>Professional Advocate Format • Editable Draft • Instant Access</p>
+<p class="price">₹199 • 1 Year Access</p>
+<button class="btn" onclick="openLogin('money-recovery',199,'money-recovery-generator.html')">🔓 Unlock Draft</button>
+<p class="disclaimer">Payment के बाद यह Draft उसी email account पर 1 साल तक unlock रहेगा।</p>
+</div>
+<div class="card">
+<h2>Rent Notice Draft</h2>
+<p>Professional Advocate Format • Editable Draft • Instant Access</p>
+<p class="price">₹199 • 1 Year Access</p>
+<button class="btn" onclick="openLogin('rent-notice',199,'rent-notice-generator.html')">🔓 Unlock Draft</button>
+<p class="disclaimer">Payment के बाद यह Draft उसी email account पर 1 साल तक unlock रहेगा।</p>
+</div>
+<div class="card">
+<h2>Cheque Bounce Notice Draft</h2>
+<p>Professional Advocate Format • Editable Draft • Instant Access</p>
+<p class="price">₹199 • 1 Year Access</p>
+<button class="btn" onclick="openLogin('cheque-bounce',199,'cheque-bounce-generator.html')">🔓 Unlock Draft</button>
+<p class="disclaimer">Payment के बाद यह Draft उसी email account पर 1 साल तक unlock रहेगा।</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2 id="modalTitle">Login to Unlock Draft</h2>
+    <p class="small">Email और Password से login करें। New user हों तो Create Account पर click करें।</p>
+
+    <div id="loginBox">
+      <input class="field" type="email" id="loginEmail" placeholder="Email / Gmail">
+      <input class="field" type="password" id="loginPassword" placeholder="Password">
+      <div class="modal-actions">
+        <button class="btn" onclick="loginUser()">Login & Continue</button>
+        <button class="btn secondary" onclick="showSignup()">Create Account</button>
+      </div>
+    </div>
+
+    <div id="signupBox" style="display:none;">
+      <input class="field" type="text" id="signupName" placeholder="Full Name">
+      <input class="field" type="text" id="signupMobile" placeholder="Mobile Number">
+      <div class="row">
+        <input class="field" type="text" id="signupPlace" placeholder="Place / City">
+        <input class="field" type="text" id="signupAddress" placeholder="Address">
+      </div>
+      <input class="field" type="email" id="signupEmail" placeholder="Email / Gmail">
+      <input class="field" type="password" id="signupPassword" placeholder="Create Password">
+      <div class="modal-actions">
+        <button class="btn" onclick="createAccount()">Create Account & Continue</button>
+        <button class="btn secondary" onclick="showLogin()">Back to Login</button>
+      </div>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC-5n2B-y4sR_EE8svpsq3LCMJiapJC9Qw",
+  authDomain: "jurissathi.firebaseapp.com",
+  projectId: "jurissathi",
+  storageBucket: "jurissathi.firebasestorage.app",
+  messagingSenderId: "529261201285",
+  appId: "1:529261201285:web:529bd38c0ae95654d6e6ec"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+let currentDraftId="", currentAmount=0, currentRedirectPage="", currentUser=null;
+function setStatus(msg){document.getElementById('status').innerText=msg||'';}
+function openLogin(draftId, amount, redirectPage){currentDraftId=draftId;currentAmount=amount;currentRedirectPage=redirectPage;setStatus('');showLogin();document.getElementById('loginModal').style.display='flex';}
+function closeModal(){document.getElementById('loginModal').style.display='none';}
+function showSignup(){document.getElementById('loginBox').style.display='none';document.getElementById('signupBox').style.display='block';setStatus('');}
+function showLogin(){document.getElementById('signupBox').style.display='none';document.getElementById('loginBox').style.display='block';setStatus('');}
+async function loginUser(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const password=document.getElementById('loginPassword').value;
+  if(!email||!password){setStatus('Email और Password भरें.');return;}
+  try{setStatus('Logging in...'); const cred=await auth.signInWithEmailAndPassword(email,password); currentUser=cred.user; closeModal(); await checkAccessOrPay();}
+  catch(e){setStatus(e.message);}
+}
+async function createAccount(){
+  const name=document.getElementById('signupName').value.trim();
+  const mobile=document.getElementById('signupMobile').value.trim();
+  const place=document.getElementById('signupPlace').value.trim();
+  const address=document.getElementById('signupAddress').value.trim();
+  const email=document.getElementById('signupEmail').value.trim();
+  const password=document.getElementById('signupPassword').value;
+  if(!name||!mobile||!place||!address||!email||!password){setStatus('सभी details भरें.');return;}
+  try{
+    setStatus('Creating account...');
+    const cred=await auth.createUserWithEmailAndPassword(email,password);
+    currentUser=cred.user;
+    await db.collection('users').doc(currentUser.uid).set({name,mobile,place,address,email,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeModal();
+    await checkAccessOrPay();
+  }catch(e){setStatus(e.message);}
+}
+async function checkAccessOrPay(){
+  const docId=currentUser.uid+'_'+currentDraftId;
+  const doc=await db.collection('purchases').doc(docId).get();
+  if(doc.exists){
+    const data=doc.data();
+    const expiry=data.expiryDate && data.expiryDate.toDate ? data.expiryDate.toDate() : null;
+    if(data.paid===true && expiry && expiry>new Date()){
+      alert('Access valid. Opening draft.'); window.location.href=currentRedirectPage; return;
+    }
+  }
+  payAndUnlock(currentDraftId,currentAmount,currentRedirectPage);
+}
+function payAndUnlock(draftId, amount, redirectPage){
+  const options={
+    key:'rzp_live_T8LI6UgK5YdOFP',
+    amount:amount*100,
+    currency:'INR',
+    name:'JurisSathi',
+    description:draftId+' Draft Access - 1 Year',
+    handler:async function(response){
+      const today=new Date(); const expiry=new Date(); expiry.setDate(today.getDate()+365);
+      const docId=currentUser.uid+'_'+draftId;
+      await db.collection('purchases').doc(docId).set({uid:currentUser.uid,email:currentUser.email,draftId,amount,paid:true,paymentId:response.razorpay_payment_id,purchaseDate:firebase.firestore.Timestamp.fromDate(today),expiryDate:firebase.firestore.Timestamp.fromDate(expiry),status:'active'});
+      alert('Payment successful. Draft unlocked for 1 year.'); window.location.href=redirectPage;
+    },
+    theme:{color:'#ff9800'}
+  };
+  new Razorpay(options).open();
+}
+</script>
+</body>
+</html>
